@@ -1,4 +1,4 @@
-export function text(str, x, y, { c }, styles = {}) {
+export function text(str, x, y, c, styles = {}) {
   const defualts = {
     color: "#888",
     size: 22,
@@ -25,13 +25,13 @@ export function text(str, x, y, { c }, styles = {}) {
   c.textAlign = align;
   c.fillStyle = color;
   c.textBaseline = baseline;
-  let lines = getLines(str, maxwidth);
+  let lines = getLines(str, maxwidth, c);
   lines.forEach(function (line, lineNum) {
     c.fillText(line, x, y + lineNum * size);
   });
 }
 
-export function getLines(text, maxWidth) {
+export function getLines(text, maxWidth, c) {
   //splits given string into an array of strings representing lines of text that fit into a given width
   let string = `${text}`;
   let words = string.split(" ");
