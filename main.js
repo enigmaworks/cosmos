@@ -6,6 +6,9 @@ import { render } from "./render.js";
 
 const { canvas, c } = CanvasManager.create();
 
+import camera from "./entities/camera.js";
+import player from "./entities/player.js";
+
 WebFont.load({
   google: {
     families: ["Teko:300", "Red+Hat+Mono:400"],
@@ -31,9 +34,9 @@ function loop() {
   lag += Date.now() - sysTime;
   sysTime = Date.now();
   while (lag >= 1000 / framerate) {
-    update();
+    update(camera, player, keys);
     lag -= 1000 / framerate;
   }
-  render({ canvas, c });
+  render({ canvas, c, camera });
   requestAnimationFrame(loop);
 }
