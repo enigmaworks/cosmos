@@ -1,5 +1,8 @@
 import { CanvasManager } from "./utilities/canvasmanager.js";
 
+import { update } from "./update.js";
+import { render } from "./render.js";
+
 const { canvas, c } = CanvasManager.create();
 let sysTime;
 
@@ -21,5 +24,7 @@ WebFont.load({
 function loop() {
   let delta = Date.now() - sysTime;
   sysTime = Date.now();
+  update(delta);
+  render({ canvas, c, delta });
   requestAnimationFrame(loop);
 }
