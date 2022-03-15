@@ -1,4 +1,5 @@
 import { CanvasManager } from "./utilities/canvasmanager.js";
+import keys, { keyUpHandler, keyDownHandler } from "./utilities/keys.js";
 
 import { update } from "./update.js";
 import { render } from "./render.js";
@@ -16,6 +17,8 @@ WebFont.load({
     window.onresize = () => {
       CanvasManager.setResolution({ canvas, c });
     };
+    document.body.addEventListener("keydown", keyDownHandler);
+    document.body.addEventListener("keyup", keyUpHandler);
     requestAnimationFrame(loop);
   },
 });
