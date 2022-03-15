@@ -16,5 +16,6 @@ export const CanvasManager = {
     c.scale(dpr, dpr);
     renderUnits.maxX = rect.width;
     renderUnits.maxY = rect.height;
+    c.translate(rect.width / 2, rect.height / 2);
   },
 };
