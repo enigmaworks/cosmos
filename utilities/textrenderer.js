@@ -4,11 +4,11 @@ export function text(str, x, y, c, styles = {}) {
     size: 22,
     font: "Teko, sans-serif",
     weight: "400",
-    align: "center",
+    align: "left",
     style: "normal",
     variant: "normal",
     maxwidth: "500",
-    baseline: "left",
+    baseline: "top",
   };
   const {
     color,

@@ -32,11 +32,12 @@ let lag = framerate;
 
 function loop() {
   lag += Date.now() - sysTime;
+  let delta = Date.now() - sysTime;
   sysTime = Date.now();
   while (lag >= 1000 / framerate) {
     update(camera, player, keys);
     lag -= 1000 / framerate;
   }
-  render({ canvas, c, camera });
+  render({ canvas, c, camera, delta });
   requestAnimationFrame(loop);
 }
