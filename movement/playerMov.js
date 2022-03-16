@@ -1,16 +1,18 @@
 export function controlsForce(player, keys) {
   let rotationForce = 0;
+  let boost = 1;
   if (keys.left) {
     rotationForce = -0.002;
   }
   if (keys.right) {
     rotationForce = 0.002;
   }
+  if (keys.space) boost = player.booster;
   let xForce = 0;
   let yForce = 0;
   if (keys.up) {
-    xForce = -(player.acceleration * Math.sin(player.rotation));
-    yForce = player.acceleration * Math.cos(player.rotation);
+    xForce = -(player.acceleration * Math.sin(player.rotation)) * boost;
+    yForce = player.acceleration * Math.cos(player.rotation) * boost;
   }
   return { r: rotationForce, x: xForce, y: yForce };
 }

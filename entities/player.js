@@ -5,6 +5,7 @@ export default {
   yVel: 0,
   rotation: 0,
   rotationVel: 0,
-  acceleration: 0.045,
+  acceleration: 0.0125,
+  booster: 4.13,
   size: 10,
 };
