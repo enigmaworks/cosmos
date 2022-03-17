@@ -1,4 +1,4 @@
-const atmosphereMultiplier = 3.1;
+const atmosphereMultiplier = 2.1;
 
 export default function (c, planets, camera, renderUnits) {
   planets.forEach((planet) => {
