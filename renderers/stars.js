@@ -5,7 +5,7 @@ for (let i = 0; i < 450000; i++) {
   stars.push(obj);
 }
 
-export function renderStars(c, camera, renderUnits) {
+export function renderStars({ c, camera, renderUnits }) {
   let universe = c.createLinearGradient(
     0,
     renderUnits.maxY / -2,

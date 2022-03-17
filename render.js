@@ -17,10 +17,11 @@ export function render({ c, fps, camera }) {
     renderUnits.maxX,
     renderUnits.maxY
   );
-  renderStars(c, camera, renderUnits);
-  atmospheres(c, planets, camera, renderUnits);
-  renderPlanets(c, camera, renderUnits);
-  renderPlayer(c, camera);
+  const items = { c, camera, player, planets, renderUnits };
+  renderStars(items);
+  atmospheres(items);
+  renderPlanets(items);
+  renderPlayer(items);
   text(
     `( ${Math.round(player.x / 100)} , ${Math.round(player.y / 100)} )`,
     25 + renderUnits.maxX / -2,

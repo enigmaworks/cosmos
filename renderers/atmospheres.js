@@ -1,6 +1,6 @@
 const atmosphereMultiplier = 2.1;
 
-export default function (c, planets, camera, renderUnits) {
+export default function ({ c, planets, camera, renderUnits }) {
   planets.forEach((planet) => {
     if (
       planet.x - camera.x + planet.size * atmosphereMultiplier >
