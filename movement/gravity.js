@@ -35,12 +35,10 @@ export default function (planets, player) {
       const distInsidePlayer =
         player.size - Math.hypot(collisonX - player.x, collisonY - player.y);
       const distToMoveOut = distInsidePlanet + distInsidePlayer;
-      player.x -= player.xVel * distToMoveOut;
-      player.y -= player.yVel * distToMoveOut;
-      force.x -= player.xVel * 1.1;
-      force.y -= player.yVel * 1.1;
-      let hulldamage =
-        (Math.hypot(player.xVel, player.yVel) * 1.25) ** 3.5 / 25;
+      player.x -= player.xVel * distToMoveOut * g;
+      player.y -= player.yVel * distToMoveOut * g;
+      force.x -= player.xVel;
+      force.y -= player.yVel;
       if (!(hulldamage < 0.5)) player.hullIntegrity -= hulldamage;
     } else {
       force.x += xG * g;
