@@ -7,7 +7,7 @@ export default function (planets, player) {
   planets.forEach(({ x, y, size, density }) => {
     const mass = Math.PI * size ** 2 * density;
     const dist = Math.hypot(x - player.x, y - player.y);
-    const G = 6.67408 * 10 ** -3;
+    const G = 6.67408 * 10 ** -2.5;
     const g = G * (mass / dist ** 2);
     const xDist = Math.hypot(x, player.x);
     const yDist = Math.hypot(y, player.y);
@@ -36,10 +36,13 @@ export default function (planets, player) {
       const distInsidePlayer =
         player.size - Math.hypot(collisonX - player.x, collisonY - player.y);
       const distToMoveOut = distInsidePlanet + distInsidePlayer;
-      player.x -= xG * g * distToMoveOut;
-      player.y -= yG * g * distToMoveOut;
-      force.x -= player.xVel;
-      force.y -= player.yVel;
+      player.x -= player.xVel * distToMoveOut;
+      player.y -= player.yVel * distToMoveOut;
+      force.x -= player.xVel * 1.1;
+      force.y -= player.yVel * 1.1;
+      let hulldamage = Math.hypot(player.xVel, player.yVel) ** 3.75 / 15;
+      console.log(hulldamage);
+      if (!(hulldamage < 0.5)) player.hullIntegrity -= hulldamage;
     } else {
       force.x += xG * g;
       force.y += yG * g;

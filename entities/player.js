@@ -1,4 +1,5 @@
 export default {
+  size: 10,
   x: 0,
   y: 0,
   xVel: 0,
@@ -6,6 +7,10 @@ export default {
   rotation: 0,
   rotationVel: 0,
   acceleration: 0.0125,
-  booster: 4.13,
-  size: 10,
+  boost_max: 5.13,
+  boost_warmup: 0.1,
+  boost: 1,
+  fuelLevel: 30,
+  fuelLevel_max: 30,
+  hullIntegrity: 100,
 };
