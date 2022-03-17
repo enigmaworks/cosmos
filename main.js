@@ -11,33 +11,56 @@ import player from "./entities/player.js";
 
 WebFont.load({
   google: {
-    families: ["Teko:300", "Red+Hat+Mono:400"],
+    families: ["Teko:300"],
   },
   timeout: 3000,
   active: function () {
-    sysTime = Date.now();
     CanvasManager.setResolution({ canvas, c });
     window.onresize = () => {
       CanvasManager.setResolution({ canvas, c });
     };
     document.body.addEventListener("keydown", keyDownHandler);
     document.body.addEventListener("keyup", keyUpHandler);
-    requestAnimationFrame(loop);
+    startAnimating(60);
   },
 });
 
-const framerate = 60;
-let sysTime = Date.now();
-let lag = framerate;
+// const framerate = 60;
+// let sysTime = Date.now();
+// let lag = framerate;
 
-function loop() {
-  lag += Date.now() - sysTime;
-  let delta = Date.now() - sysTime;
-  sysTime = Date.now();
-  while (lag >= 1000 / framerate) {
+// function loop() {
+//   lag += Date.now() - sysTime;
+//   let delta = Date.now() - sysTime;
+//   sysTime = Date.now();
+//   while (lag >= 1000 / framerate) {
+//     update(camera, player, keys);
+//     lag -= 1000 / framerate;
+//   }
+//   render({ canvas, c, camera, delta });
+//   requestAnimationFrame(loop);
+// }
+
+let frameCount = 0;
+let fpsInterval, startTime, now, then, elapsed;
+
+function startAnimating(fps) {
+  // http://jsfiddle.net/14n0de7t/7/
+  fpsInterval = 1000 / fps;
+  then = window.performance.now();
+  startTime = then;
+  animate();
+}
+
+function animate(newtime) {
+  requestAnimationFrame(animate);
+  now = newtime;
+  elapsed = now - then;
+  const sinceStart = now - startTime;
+  const fps = Math.round((1000 / (sinceStart / ++frameCount)) * 100) / 100;
+  if (elapsed > fpsInterval) {
+    then = now - (elapsed % fpsInterval);
     update(camera, player, keys);
-    lag -= 1000 / framerate;
+    render({ canvas, c, camera, fps });
   }
-  render({ canvas, c, camera, delta });
-  requestAnimationFrame(loop);
 }
