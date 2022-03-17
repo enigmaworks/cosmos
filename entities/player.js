@@ -7,7 +7,7 @@ export default {
   rotation: 0,
   rotationVel: 0,
   acceleration: 0.0125,
-  boost_max: 5.13,
+  boost_max: 4.13,
   boost_warmup: 0.1,
   boost: 1,
   fuelLevel: 30,
