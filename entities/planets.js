@@ -19,7 +19,7 @@ export default [
     density: 1,
     size: 400,
     x: 0,
-    y: 1000,
+    y: 0,
     fill: {
       type: "gradient",
       f: {

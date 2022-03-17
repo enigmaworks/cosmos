@@ -1,7 +1,7 @@
 export default {
   size: 10,
-  x: 0,
-  y: 0,
+  x: 300,
+  y: 500,
   xVel: 0,
   yVel: 0,
   rotation: 0,
