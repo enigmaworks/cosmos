@@ -4,6 +4,8 @@ import renderPlanets from "./renderers/planets.js";
 import renderPlayer from "./renderers/player.js";
 import { renderStars } from "./renderers/stars.js";
 import player from "./entities/player.js";
+import atmospheres from "./renderers/atmospheres.js";
+import planets from "./entities/planets.js";
 
 export function render({ c, delta, camera }) {
   c.clearRect(
@@ -13,7 +15,8 @@ export function render({ c, delta, camera }) {
     renderUnits.maxY
   );
   renderStars(c, camera, renderUnits);
-  renderPlanets(c, camera, player);
+  atmospheres(c, planets, camera, renderUnits);
+  renderPlanets(c, camera, renderUnits);
   renderPlayer(c, camera);
   text(
     `(${Math.round(player.x)}, ${Math.round(player.y)})`,
