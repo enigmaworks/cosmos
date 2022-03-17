@@ -12,5 +12,9 @@ export default {
   boost: 1,
   fuelLevel: 30,
   fuelLevel_max: 30,
+  oxygenLevel: 500,
+  oxygenLevel_max: 500,
   hullIntegrity: 100,
+  hullIntegrity_max: 100,
+  oxygen_depletion_speed: 0.05,
 };

@@ -8,4 +8,6 @@ export function update(camera, player, keys) {
   let cf = controlsForce(player, keys);
   movePlayer(player, [cf, gf]);
   moveCamera(camera, player);
+  player.oxygenLevel -=
+    player.oxygen_depletion_speed + 0.1 * ((100 - player.hullIntegrity) / 100);
 }

@@ -26,7 +26,6 @@ export default function (planets, player) {
         yG *= -1;
       }
     }
-
     if (dist <= size + player.size) {
       const collisonX =
         (player.x * size + x * player.size) / (player.size + size);
@@ -40,8 +39,8 @@ export default function (planets, player) {
       player.y -= player.yVel * distToMoveOut;
       force.x -= player.xVel * 1.1;
       force.y -= player.yVel * 1.1;
-      let hulldamage = Math.hypot(player.xVel, player.yVel) ** 3.75 / 15;
-      console.log(hulldamage);
+      let hulldamage =
+        (Math.hypot(player.xVel, player.yVel) * 1.25) ** 3.5 / 25;
       if (!(hulldamage < 0.5)) player.hullIntegrity -= hulldamage;
     } else {
       force.x += xG * g;

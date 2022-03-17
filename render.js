@@ -9,7 +9,7 @@ import planets from "./entities/planets.js";
 
 let tick = 0;
 let fps;
-export function render({ c, delta, camera }) {
+export function render({ c, fps, camera }) {
   tick++;
   c.clearRect(
     renderUnits.maxX / -2,
@@ -22,17 +22,14 @@ export function render({ c, delta, camera }) {
   renderPlanets(c, camera, renderUnits);
   renderPlayer(c, camera);
   text(
-    `(${Math.round(player.x)}, ${Math.round(player.y)})`,
+    `( ${Math.round(player.x / 100)} , ${Math.round(player.y / 100)} )`,
     25 + renderUnits.maxX / -2,
     25 + renderUnits.maxY / -2,
     c,
     {
       color: "#eee",
-      font: "Red Hat Mono",
-      size: 15,
     }
   );
-  if (tick % 8 === 0) fps = Math.round(1000 / delta);
   text(
     `${fps} FPS`,
     -25 + renderUnits.maxX / 2,
@@ -47,7 +44,7 @@ export function render({ c, delta, camera }) {
   let color = ((Math.sin(tick / 10) + 1) / 2) * 100 + 50;
 
   text(
-    `${Math.round(player.fuelLevel)} fuel units`,
+    `${Math.round((player.fuelLevel / player.fuelLevel_max) * 100)}% fuel`,
     25 + renderUnits.maxX / -2,
     75 + renderUnits.maxY / -2,
     c,
@@ -57,7 +54,9 @@ export function render({ c, delta, camera }) {
   );
 
   text(
-    `Hull Integrity: ${Math.round(player.hullIntegrity)}%`,
+    `Hull Integrity: ${Math.round(
+      (player.hullIntegrity / player.hullIntegrity_max) * 100
+    )}%`,
     25 + renderUnits.maxX / -2,
     100 + renderUnits.maxY / -2,
     c,
@@ -65,7 +64,9 @@ export function render({ c, delta, camera }) {
   );
 
   text(
-    `Oxygen: 100%`,
+    `Oxygen: ${Math.round(
+      (player.oxygenLevel / player.oxygenLevel_max) * 100
+    )}%`,
     25 + renderUnits.maxX / -2,
     125 + renderUnits.maxY / -2,
     c,
