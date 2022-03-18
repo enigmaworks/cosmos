@@ -1,6 +1,4 @@
-import planets from "../entities/planets.js";
-
-export default function ({ c, camera, renderUnits }) {
+export default function ({ c, camera, planets, renderUnits }) {
   let p = 0;
   for (let i = 0; i < planets.length; i++) {
     const planet = planets[i];
