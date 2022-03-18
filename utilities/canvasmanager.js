@@ -13,9 +13,11 @@ export const CanvasManager = {
     let rect = canvas.getBoundingClientRect();
     canvas.width = rect.width * dpr;
     canvas.height = rect.height * dpr;
-    c.scale(dpr, dpr);
-    renderUnits.maxX = rect.width;
-    renderUnits.maxY = rect.height;
+    c.scale(dpr * scale, dpr * scale);
+    if (canvas.id === "canvas") {
+      renderUnits.maxX = rect.width;
+      renderUnits.maxY = rect.height;
+    }
     c.translate(rect.width / 2, rect.height / 2);
   },
 };
