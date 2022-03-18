@@ -2,8 +2,8 @@ export default [
   {
     density: 1,
     size: 450,
-    x: 1340,
-    y: 3040,
+    x: 1040,
+    y: 340,
     fill: {
       type: "gradient",
       f: {
