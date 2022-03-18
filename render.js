@@ -17,7 +17,7 @@ export function render({ c, fps, camera }) {
     renderUnits.maxX,
     renderUnits.maxY
   );
-  const items = { c, camera, player, planets, renderUnits };
+  const items = { c, camera, player, planets, renderUnits, player };
   renderStars(items);
   atmospheres(items);
   renderPlanets(items);
@@ -43,7 +43,6 @@ export function render({ c, fps, camera }) {
   );
   //sin returns between -1 and 1, convert it to a % by making it positive(add one), dividing it by two(maximum value), and then multiply it by the desired maxvalue, then add the desired minimum
   let color = ((Math.sin(tick / 10) + 1) / 2) * 100 + 50;
-
   text(
     `${Math.round((player.fuelLevel / player.fuelLevel_max) * 100)}% fuel`,
     25 + renderUnits.maxX / -2,
@@ -53,7 +52,6 @@ export function render({ c, fps, camera }) {
       color: player.fuelLevel <= 9 ? `RGB(255 ${color} ${color})` : "#eee",
     }
   );
-
   text(
     `Hull Integrity: ${Math.round(
       (player.hullIntegrity / player.hullIntegrity_max) * 100
@@ -63,7 +61,6 @@ export function render({ c, fps, camera }) {
     c,
     { color: "#ddd" }
   );
-
   text(
     `Oxygen: ${Math.round(
       (player.oxygenLevel / player.oxygenLevel_max) * 100
