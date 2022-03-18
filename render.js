@@ -77,5 +77,16 @@ export function render({ c, fps, camera }) {
     c,
     { color: "#ddd" }
   );
+  text(
+    `Boost: ${Math.round(
+      ((player.boost - 1) / (player.boost_max - 1)) * 100
+    )}%`,
+    25 + renderUnits.maxX / -2,
+    175 + renderUnits.maxY / -2,
+    c,
+    {
+      color: "#eee",
+    }
+  );
   minimap(items);
 }
