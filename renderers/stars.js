@@ -6,18 +6,7 @@ for (let i = 0; i < 450000; i++) {
 }
 
 export function renderStars({ c, camera, renderUnits }) {
-  let universe = c.createLinearGradient(
-    0,
-    renderUnits.maxY / -2,
-    renderUnits.maxX - 200,
-    0
-  );
-  universe.addColorStop(0, "#110218");
-  universe.addColorStop(0.33, "#0a0a24");
-  universe.addColorStop(0.9, "#090212");
-  universe.addColorStop(1, "#01110b");
-
-  c.fillStyle = universe;
+  c.fillStyle = "hsla(240, 57%, 9%)";
   c.fillRect(
     renderUnits.maxX / -2,
     renderUnits.maxY / -2,
