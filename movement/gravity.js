@@ -4,14 +4,18 @@ export default function (planets, player) {
     y: 0,
     r: 0,
   };
-  planets.forEach(({ x, y, size, density }) => {
-    const mass = Math.PI * size ** 2 * density + 1;
+  planets.forEach((planet, i) => {
+    const { name, x, y, size, density } = planet;
+    const mass = Math.PI * size ** 2 * density ** (1 / 2);
     const real_distance = Math.hypot(x - player.x, y - player.y);
     const G = 6.67408 * 10 ** -2.25;
     const g = G * (mass / real_distance ** 2);
     const xDist = Math.hypot(x, player.x);
     const yDist = Math.hypot(y, player.y);
     const angle = Math.atan(xDist / yDist);
+    planet.distance = real_distance;
+    planet.gravitationalInfluence = g;
+    planet.angle = angle;
     let xG = Math.sin(angle);
     let yG = Math.cos(angle);
     if (player.x > x) {
