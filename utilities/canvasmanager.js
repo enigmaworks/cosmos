@@ -8,16 +8,16 @@ export const CanvasManager = {
     const c = canvas.getContext("2d");
     return { canvas, c };
   },
-  setResolution: ({ canvas, c }, scale = 1) => {
+  setResolution: (canvas, c, scale = 1) => {
     let dpr = devicePixelRatio || 1;
     let rect = canvas.getBoundingClientRect();
     canvas.width = rect.width * dpr;
     canvas.height = rect.height * dpr;
-    c.scale(dpr * scale, dpr * scale);
+    c.scale(dpr * (1 / scale), dpr * (1 / scale));
     if (canvas.id === "canvas") {
-      renderUnits.maxX = rect.width;
-      renderUnits.maxY = rect.height;
+      renderUnits.maxX = rect.width * scale;
+      renderUnits.maxY = rect.height * scale;
     }
-    c.translate(rect.width / 2, rect.height / 2);
+    c.translate((rect.width * scale) / 2, (rect.height * scale) / 2);
   },
 };

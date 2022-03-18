@@ -15,9 +15,9 @@ WebFont.load({
   },
   timeout: 3000,
   active: function () {
-    CanvasManager.setResolution({ canvas, c });
+    CanvasManager.setResolution(canvas, c);
     window.onresize = () => {
-      CanvasManager.setResolution({ canvas, c });
+      CanvasManager.setResolution(canvas, c);
     };
     document.body.addEventListener("keydown", keyDownHandler);
     document.body.addEventListener("keyup", keyUpHandler);
