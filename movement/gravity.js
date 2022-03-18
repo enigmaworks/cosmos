@@ -39,12 +39,15 @@ export default function (planets, player) {
       player.y -= player.yVel * distToMoveOut * g;
       force.x -= player.xVel;
       force.y -= player.yVel;
-      let hulldamage = (Math.hypot(player.xVel, player.yVel) * 1.25) ** 4 / 50;
-      if (!(hulldamage < 0.5)) player.hullIntegrity -= hulldamage;
+      const hulldamage =
+        50 * Math.log(Math.hypot(player.xVel, player.yVel) - 3);
+      // console.log(hulldamage);
+      if (!(hulldamage < 0) && hulldamage) player.hullIntegrity -= hulldamage;
     } else {
       force.x += xG * g;
       force.y += yG * g;
     }
   });
+
   return force;
 }
