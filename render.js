@@ -6,6 +6,7 @@ import { renderStars } from "./renderers/stars.js";
 import player from "./entities/player.js";
 import atmospheres from "./renderers/atmospheres.js";
 import planets from "./entities/planets.js";
+import minimap from "./renderers/minimap.js";
 
 let tick = 0;
 let fps;
@@ -70,4 +71,5 @@ export function render({ c, fps, camera }) {
     c,
     { color: "#ddd" }
   );
+  minimap(items);
 }

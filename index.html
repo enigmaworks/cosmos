@@ -19,10 +19,22 @@
         object-fit: contain;
         position: absolute;
       }
+      .map {
+        position: absolute;
+        z-index: 3;
+        bottom: 0;
+        right: 0;
+        width: 15rem;
+        height: 15rem;
+        background-color: black;
+        border: 1px solid white;
+      }
     </style>
   </head>
   <body>
     <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js"></script>
     <script src="./main.js" type="module"></script>
+      <canvas  class="map" id="map"></canvas>
+    </div>
   </body>
 </html>
