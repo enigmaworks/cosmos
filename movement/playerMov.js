@@ -14,7 +14,7 @@ export function controlsForce(player, keys) {
     player.fuelLevel -= player.acceleration * player.boost_max;
   } else {
     if (player.boost > 1) {
-      player.boost -= 0.2;
+      player.boost -= 0.04;
     } else {
       player.boost = 1;
     }

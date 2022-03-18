@@ -5,10 +5,10 @@ export default function (planets, player) {
     r: 0,
   };
   planets.forEach(({ x, y, size, density }) => {
-    const mass = Math.PI * size ** 2 * density;
-    const dist = Math.hypot(x - player.x, y - player.y);
-    const G = 6.67408 * 10 ** -2.5;
-    const g = G * (mass / dist ** 2);
+    const mass = Math.PI * size ** 2 * density + 1;
+    const real_distance = Math.hypot(x - player.x, y - player.y);
+    const G = 6.67408 * 10 ** -2.25;
+    const g = G * (mass / real_distance ** 2);
     const xDist = Math.hypot(x, player.x);
     const yDist = Math.hypot(y, player.y);
     const angle = Math.atan(xDist / yDist);
@@ -26,7 +26,7 @@ export default function (planets, player) {
         yG *= -1;
       }
     }
-    if (dist <= size + player.size) {
+    if (real_distance <= size + player.size) {
       const collisonX =
         (player.x * size + x * player.size) / (player.size + size);
       const collisonY =
