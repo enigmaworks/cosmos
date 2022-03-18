@@ -29,8 +29,10 @@ export function controlsForce(player, keys) {
   }
   return { r: rotationForce, x: xForce, y: yForce };
 }
+
 export default function (player, forces = []) {
   player.rotation *= 0.97;
+  player.xVel, (player.yVel *= 0.998);
   forces.forEach((e) => {
     const { x, y, r } = { x: 0, y: 0, r: 0, ...e };
     player.xVel += x;
