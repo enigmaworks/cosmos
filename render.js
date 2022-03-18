@@ -7,6 +7,7 @@ import player from "./entities/player.js";
 import atmospheres from "./renderers/atmospheres.js";
 import planets from "./entities/planets.js";
 import minimap from "./renderers/minimap.js";
+import keys from "./utilities/keys.js";
 
 let tick = 0;
 let fps;
@@ -18,7 +19,7 @@ export function render({ c, fps, camera }) {
     renderUnits.maxX,
     renderUnits.maxY
   );
-  const items = { c, camera, player, planets, renderUnits, player };
+  const items = { c, camera, player, planets, renderUnits, player, keys };
   renderStars(items);
   atmospheres(items);
   renderPlanets(items);
