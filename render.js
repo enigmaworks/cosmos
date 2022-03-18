@@ -60,7 +60,12 @@ export function render({ c, fps, camera }) {
     25 + renderUnits.maxX / -2,
     100 + renderUnits.maxY / -2,
     c,
-    { color: "#ddd" }
+    {
+      color:
+        player.hullIntegrity / player.hullIntegrity_max <= 0.2
+          ? `RGB(255 ${color} ${color})`
+          : "#eee",
+    }
   );
   text(
     `Oxygen: ${Math.round(

@@ -1,3 +1,4 @@
+export default function ({ c, camera, player, keys }) {
 import player from "../entities/player.js";
 
 export default function ({ c, camera }) {
@@ -9,7 +10,7 @@ export default function ({ c, camera }) {
   c.rotate(player.rotation + Math.PI / 2);
   c.translate(-player.size, -player.size * 1.25);
   c.scale(0.5 / player.size, 0.5 / player.size);
-  c.fillStyle = "#eee";
+  c.fillStyle = keys.up ? "#fcc" : "#eee";
   c.fill(path);
   c.restore();
 
