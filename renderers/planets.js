@@ -33,6 +33,38 @@ export default function ({ c, camera, planets, renderUnits }) {
       c.fillStyle = fill;
       c.arc(0, 0, planet.size, 0, Math.PI * 2);
       c.fill();
+
+      let light_occlusion = c.createRadialGradient(
+        0,
+        0,
+        0,
+        planet.size / 15,
+        planet.size / 15,
+        planet.size * 1.25
+      );
+      light_occlusion.addColorStop(0.55, "#fff0");
+      light_occlusion.addColorStop(1, "#ffff");
+      c.globalAlpha = 0.35;
+      c.fillStyle = light_occlusion;
+      c.beginPath();
+      c.arc(0, 0, planet.size, 0, Math.PI * 2);
+      c.fill();
+
+      let dark_occlusion = c.createRadialGradient(
+        0,
+        0,
+        0,
+        planet.size / -4,
+        planet.size / -4,
+        planet.size * 1.35
+      );
+      dark_occlusion.addColorStop(0.85, "hsla(240, 57%, 9%, 0)");
+      dark_occlusion.addColorStop(1, "hsla(240, 57%, 9%, 1)");
+      c.globalAlpha = 0.25;
+      c.fillStyle = dark_occlusion;
+      c.beginPath();
+      c.arc(0, 0, planet.size, 0, Math.PI * 2);
+      c.fill();
       c.restore();
     }
   }
