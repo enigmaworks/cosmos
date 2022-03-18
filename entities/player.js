@@ -6,7 +6,7 @@ export default {
   yVel: 0,
   rotation: 0,
   rotationVel: 0,
-  acceleration: 0.0125,
+  acceleration: 0.015,
   boost_max: 5.33,
   boost_warmup: 0.065,
   boost: 1,
