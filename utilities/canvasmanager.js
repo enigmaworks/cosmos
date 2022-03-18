@@ -8,7 +8,7 @@ export const CanvasManager = {
     const c = canvas.getContext("2d");
     return { canvas, c };
   },
-  setResolution: ({ canvas, c }) => {
+  setResolution: ({ canvas, c }, scale = 1) => {
     let dpr = devicePixelRatio || 1;
     let rect = canvas.getBoundingClientRect();
     canvas.width = rect.width * dpr;
