@@ -28,8 +28,8 @@ export function renderStars({ c, camera, renderUnits }) {
   c.fillStyle = "white";
   c.save();
   stars.forEach((star, num) => {
-    let xPos = (star.x * 9000 - 9000 / 2) * 2;
-    let yPos = (star.y * 9000 - 9000 / 2) * 2;
+    let xPos = (star.x * 14000 - 14000 / 2) * 2;
+    let yPos = (star.y * 14000 - 14000 / 2) * 2;
     let size;
     if (num % 100 === 0) {
       xPos -= camera.x / 18;
