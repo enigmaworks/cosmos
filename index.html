@@ -18,12 +18,13 @@
         height: 100vh;
         object-fit: contain;
         position: absolute;
+        background-color: hsl(240, 57%, 9%);
       }
       .map {
         position: absolute;
         z-index: 3;
-        bottom: 0;
-        right: 0;
+        top: calc(100% - 15rem);
+        left: calc(100% - 15rem);
         width: 15rem;
         height: 15rem;
         background-color: #000b;
@@ -35,7 +36,39 @@
   <body>
     <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js"></script>
     <script src="./main.js" type="module"></script>
-      <canvas  class="map" id="map"></canvas>
+      <canvas class="map" id="map"></canvas>
     </div>
   </body>
+  <script>
+    const map =document.querySelector(".map")
+    map.onmousedown = dragMouseDown;
+    let pos1,pos2,pos3,pos4 = 0;
+// https://www.w3schools.com/howto/howto_js_draggable.asp
+    function dragMouseDown(e) {
+      e = e || window.event;
+      e.preventDefault();
+      pos3 = e.clientX;
+      pos4 = e.clientY;
+      document.onmouseup = closeDragElement;
+      document.onmousemove = elementDrag;
+    }
+    function elementDrag(e) {
+      e = e || window.event;
+      e.preventDefault();
+    // calculate the new cursor position:
+     pos1 = pos3 - e.clientX;
+      pos2 = pos4 - e.clientY;
+      pos3 = e.clientX;
+     pos4 = e.clientY;
+      // set the element's new position:
+      map.style.top = (map.offsetTop - pos2) + "px";
+      map.style.left = (map.offsetLeft - pos1) + "px";
+  }
+
+  function closeDragElement() {
+    // stop moving when mouse button is released:
+    document.onmouseup = null;
+    document.onmousemove = null;
+  }
+  </script>
 </html>
