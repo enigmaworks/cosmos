@@ -11,9 +11,13 @@ export function controlsForce(player, keys) {
     if (player.boost < player.boost_max) {
       player.boost += player.boost_warmup;
     }
-    player.fuelLevel -= player.boost / 250;
+    player.fuelLevel -= player.acceleration * player.boost_max;
   } else {
-    player.boost = 1;
+    if (player.boost > 1) {
+      player.boost -= 0.2;
+    } else {
+      player.boost = 1;
+    }
   }
   boost = player.boost;
   let xForce = 0;
