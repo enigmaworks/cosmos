@@ -25,7 +25,7 @@ export function render({ c, fps, camera }) {
   });
 
   text(
-    `( ${Math.round(player.x / 100)} , ${Math.round(player.y / 100)} )`,
+    `( ${Math.round(player.x / 100)} , ${Math.round(player.y / -100)} )`,
     25 + renderUnits.maxX / -2,
     25 + renderUnits.maxY / -2,
     c,

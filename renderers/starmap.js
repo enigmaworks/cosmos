@@ -16,7 +16,7 @@ export default function (c, planets, mapsize) {
     c.arc(planet.x / scale, planet.y / scale, planet.size / scale, 0, Math.PI * 2);
     c.fill();
     text(
-      `(${Math.round(planet.x / 100)},${Math.round(planet.y / 100)})`,
+      `(${Math.round(planet.x / 100)},${Math.round(planet.y / -100)})`,
       planet.x / scale,
       (planet.y + planet.size) / scale + 2,
       c,
