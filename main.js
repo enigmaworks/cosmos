@@ -26,7 +26,7 @@ WebFont.load({
     const minimap = document.createElement("canvas");
     minimap.classList.add("map");
     document.body.appendChild(minimap);
-    minimap.onmousedown = elementDrag;
+    // minimap.onmousedown = elementDrag;
 
     const starmap = document.createElement("canvas");
     const starmap_c = starmap.getContext("2d");

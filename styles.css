@@ -21,7 +21,7 @@ canvas {
   height: 15rem;
   background-color: #000b;
   border: 1px solid #fff4;
-  border-radius: 1rem;
+  border-top-left-radius: 1rem;
 }
 .starmap {
   z-index: 3;
