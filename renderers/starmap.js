@@ -18,16 +18,16 @@ export default function (c, planets, mapsize) {
     text(
       `(${Math.round(planet.x / 100)},${Math.round(planet.y / 100)})`,
       planet.x / scale,
-      (planet.y + planet.size) / scale + 5,
+      (planet.y + planet.size) / scale,
       c,
       {
-        size: 15,
+        size: 1600 / scale,
         color: "#eee",
         align: "center",
       }
     );
-    text(`${planet.name}`, planet.x / scale, (planet.y - planet.size) / scale - 2.5, c, {
-      size: 15,
+    text(`${planet.name}`, planet.x / scale, (planet.y - planet.size) / scale, c, {
+      size: 1600 / scale,
       color: "#eee",
       baseline: "bottom",
       align: "center",
