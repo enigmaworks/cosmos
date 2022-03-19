@@ -1,6 +1,7 @@
 import { CanvasManager } from "./utilities/canvasmanager.js";
 import keys, { keyUpHandler, keyDownHandler } from "./utilities/keys.js";
 import elementDrag from "./utilities/elementdrag.js";
+import renderStarmap from "./renderers/starmap.js";
 
 import { update } from "./update.js";
 import { render } from "./render.js";
@@ -9,6 +10,7 @@ const { canvas, c } = CanvasManager.create();
 
 import camera from "./entities/camera.js";
 import player from "./entities/player.js";
+import planets from "./entities/planets.js";
 
 WebFont.load({
   google: {
@@ -17,9 +19,6 @@ WebFont.load({
   timeout: 3000,
   active: function () {
     CanvasManager.setResolution(canvas, c);
-    window.onresize = () => {
-      CanvasManager.setResolution(canvas, c);
-    };
     document.body.addEventListener("keydown", keyDownHandler);
     document.body.addEventListener("keyup", keyUpHandler);
     startAnimating(60);
@@ -30,11 +29,20 @@ WebFont.load({
     minimap.onmousedown = elementDrag;
 
     const starmap = document.createElement("canvas");
+    const starmap_c = starmap.getContext("2d");
     starmap.classList.add("starmap");
     document.body.appendChild(starmap);
     document.body.addEventListener("keydown", (e) => {
       if (e.key === "m") starmap.classList.toggle("shown");
     });
+    let { xmax } = CanvasManager.setResolution(starmap, starmap_c);
+    renderStarmap(starmap_c, planets, xmax);
+
+    window.onresize = () => {
+      CanvasManager.setResolution(canvas, c);
+      let { xmax } = CanvasManager.setResolution(starmap, starmap_c);
+      renderStarmap(starmap_c, planets, xmax);
+    };
   },
 });
 
