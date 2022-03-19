@@ -38,13 +38,13 @@ export default function ({ c, camera, planets, renderUnits }) {
         0,
         0,
         0,
-        planet.size / 15,
-        planet.size / 15,
-        planet.size * 1.25
+        planet.size / 2.5,
+        planet.size / 2.5,
+        planet.size * 1.8
       );
       light_occlusion.addColorStop(0.55, "#fff0");
       light_occlusion.addColorStop(1, "#ffff");
-      c.globalAlpha = 0.35;
+      c.globalAlpha = 0.5;
       c.fillStyle = light_occlusion;
       c.beginPath();
       c.arc(0, 0, planet.size, 0, Math.PI * 2);
@@ -54,13 +54,13 @@ export default function ({ c, camera, planets, renderUnits }) {
         0,
         0,
         0,
-        planet.size / -4,
-        planet.size / -4,
+        planet.size / -4.5,
+        planet.size / -5.5,
         planet.size * 1.35
       );
-      dark_occlusion.addColorStop(0.85, "hsla(240, 57%, 9%, 0)");
+      dark_occlusion.addColorStop(0.75, "hsla(240, 57%, 9%, 0)");
       dark_occlusion.addColorStop(1, "hsla(240, 57%, 9%, 1)");
-      c.globalAlpha = 0.25;
+      c.globalAlpha = 0.35;
       c.fillStyle = dark_occlusion;
       c.beginPath();
       c.arc(0, 0, planet.size, 0, Math.PI * 2);
