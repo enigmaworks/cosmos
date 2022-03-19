@@ -1,8 +1,8 @@
 export function text(str, x, y, c, styles = {}) {
   const defualts = {
     color: "#888",
-    size: 22,
-    font: "Teko, sans-serif",
+    size: 1000,
+    font: "Exo 2, sans-serif",
     weight: "400",
     align: "left",
     style: "normal",
@@ -10,17 +10,10 @@ export function text(str, x, y, c, styles = {}) {
     maxwidth: "500",
     baseline: "top",
   };
-  const {
-    color,
-    size,
-    font,
-    weight,
-    align,
-    style,
-    variant,
-    maxwidth,
-    baseline,
-  } = { ...defualts, ...styles };
+  const { color, size, font, weight, align, style, variant, maxwidth, baseline } = {
+    ...defualts,
+    ...styles,
+  };
   c.font = `${style} ${variant} ${weight} ${size}px ${font}`;
   c.textAlign = align;
   c.fillStyle = color;
