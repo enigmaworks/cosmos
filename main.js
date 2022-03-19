@@ -24,10 +24,17 @@ WebFont.load({
     document.body.addEventListener("keyup", keyUpHandler);
     startAnimating(60);
 
-    const map = document.createElement("canvas");
-    map.classList.add("map");
-    document.body.appendChild(map);
-    map.onmousedown = elementDrag;
+    const minimap = document.createElement("canvas");
+    minimap.classList.add("map");
+    document.body.appendChild(minimap);
+    minimap.onmousedown = elementDrag;
+
+    const starmap = document.createElement("canvas");
+    starmap.classList.add("starmap");
+    document.body.appendChild(starmap);
+    document.body.addEventListener("keydown", (e) => {
+      if (e.key === "m") starmap.classList.toggle("shown");
+    });
   },
 });
 
