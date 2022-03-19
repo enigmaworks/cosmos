@@ -19,6 +19,11 @@ export function render({ c, fps, camera }) {
   atmospheres(items);
   renderPlanets(items);
   renderPlayer(items);
+  text(`press [ M ] to toggle starmap`, 15 + renderUnits.maxX / -2, -15 + renderUnits.maxY / 2, c, {
+    color: "#bbb",
+    baseline: "bottom",
+  });
+
   text(
     `( ${Math.round(player.x / 100)} , ${Math.round(player.y / 100)} )`,
     25 + renderUnits.maxX / -2,
