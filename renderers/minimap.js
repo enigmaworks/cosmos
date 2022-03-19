@@ -5,6 +5,7 @@ let map_elem;
 let map;
 let mapsize;
 const scale = 40;
+
 export default function ({ camera, planets, player }) {
   if (firstRender) {
     map_elem = document.querySelector(".map");
@@ -13,12 +14,9 @@ export default function ({ camera, planets, player }) {
     CanvasManager.setResolution(map_elem, map, scale);
     firstRender = false;
   }
-  map.clearRect(
-    (-mapsize * scale) / 2,
-    (-mapsize * scale) / 2,
-    mapsize * scale,
-    mapsize * scale
-  );
+
+  map.clearRect((-mapsize * scale) / 2, (-mapsize * scale) / 2, mapsize * scale, mapsize * scale);
+
   for (let i = 0; i < planets.length; i++) {
     const planet = planets[i];
     if (
@@ -36,19 +34,19 @@ export default function ({ camera, planets, player }) {
       map.restore();
     }
   }
-  map.beginPath();
-  map.fillStyle = "white";
 
   map.save();
   map.translate(player.x - camera.x, player.y - camera.y);
+
+  //account for sprite rotation and offset
   map.rotate(player.rotation + Math.PI / 2);
   map.translate((-player.size * scale) / 3, (-player.size * 1.25 * scale) / 3);
-  map.scale(
-    ((0.5 / player.size) * scale) / 3,
-    ((0.5 / player.size) * scale) / 3
-  );
+  map.scale(((0.5 / player.size) * scale) / 3, ((0.5 / player.size) * scale) / 3);
+
+  map.beginPath();
+
   map.fillStyle = "#eee";
   map.fill(new Path2D(player.sprite));
-  map.fill();
+
   map.restore();
 }

@@ -1,5 +1,4 @@
 export default function ({ c, camera, planets, renderUnits }) {
-  let p = 0;
   for (let i = 0; i < planets.length; i++) {
     const planet = planets[i];
     if (
@@ -8,7 +7,6 @@ export default function ({ c, camera, planets, renderUnits }) {
       planet.y - camera.y + planet.size > -renderUnits.maxY / 2 &&
       planet.y - camera.y - planet.size < renderUnits.maxY / 2
     ) {
-      p++;
       c.save();
       c.translate(planet.x - camera.x, planet.y - camera.y);
       c.beginPath();

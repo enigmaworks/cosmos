@@ -7,12 +7,7 @@ for (let i = 0; i < 450000; i++) {
 
 export function renderStars({ c, camera, renderUnits }) {
   c.fillStyle = "hsla(240, 57%, 9%)";
-  c.fillRect(
-    renderUnits.maxX / -2,
-    renderUnits.maxY / -2,
-    renderUnits.maxX,
-    renderUnits.maxY
-  );
+  c.fillRect(renderUnits.maxX / -2, renderUnits.maxY / -2, renderUnits.maxX, renderUnits.maxY);
 
   c.fillStyle = "white";
   c.save();
