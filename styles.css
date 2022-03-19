@@ -25,8 +25,8 @@ canvas {
 }
 .starmap {
   z-index: 3;
-  width: 80vmin;
-  height: 80vmin;
+  width: 90vmin;
+  height: 90vmin;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
