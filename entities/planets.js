@@ -102,12 +102,30 @@ export default [
     name: "In A Galaxy Far, Far Away",
     density: 1,
     size: 550,
-    x: 40037,
-    y: 20054,
+    x: 30037,
+    y: 31054,
     fill: {
-      type: "red",
-      f: "blue",
+      type: "gradient",
+      f: {
+        stop1: { s: 0, c: "red" },
+        stop2: { s: 1, c: "blue" },
+      },
     },
     atmosphere: "purple",
+  },
+  {
+    name: "Really Humungous",
+    density: 0.45,
+    size: 850,
+    x: -20037,
+    y: -26054,
+    fill: {
+      type: "gradient",
+      f: {
+        stop1: { s: 0, c: "#CA1212" },
+        stop2: { s: 1, c: "#A8EA17" },
+      },
+    },
+    atmosphere: "#CA1212",
   },
 ];
