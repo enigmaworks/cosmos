@@ -28,7 +28,25 @@ export default function ({ camera, planets, player }) {
       map.save();
       map.translate(planet.x - camera.x, planet.y - camera.y);
       map.beginPath();
-      map.fillStyle = planet.atmosphere;
+      let fill = "#888";
+      if (planet.fill.type === "color") {
+        fill = planet.fill.f;
+      }
+      if (planet.fill.type === "img") {
+        fill = map.createPattern(planet.fill.f, "repeat");
+      }
+      if (planet.fill.type === "gradient") {
+        fill = map.createLinearGradient(
+          planet.size / 2,
+          planet.size / 2,
+          -planet.size / 2,
+          -planet.size / 2
+        );
+        Object.values(planet.fill.f).forEach((stop) => {
+          fill.addColorStop(stop.s, stop.c);
+        });
+      }
+      map.fillStyle = fill;
       map.arc(0, 0, planet.size, 0, Math.PI * 2);
       map.fill();
       map.restore();
