@@ -14,7 +14,7 @@ import planets from "./entities/planets.js";
 
 WebFont.load({
   google: {
-    families: ["Exo 2:wght@400"],
+    families: ["Exo+2:wght@300"],
   },
   timeout: 3000,
   active: function () {

@@ -1,9 +1,9 @@
 export function text(str, x, y, c, styles = {}) {
   const defualts = {
     color: "#888",
-    size: 1000,
-    font: "Exo 2, sans-serif",
-    weight: "400",
+    size: 16,
+    font: "'Exo 2', sans-serif",
+    weight: "200",
     align: "left",
     style: "normal",
     variant: "normal",
