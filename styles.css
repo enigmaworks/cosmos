@@ -33,7 +33,7 @@ canvas {
   max-width: 100%;
   background-color: #000e;
   border: 1px solid #fffa;
-  box-shadow: 0 0 0 50vmax #0004;
+  box-shadow: 0 0 0 50vmax #0006;
   opacity: 0;
   transition: opacity 200ms ease;
 }
