@@ -60,22 +60,6 @@ WebFont.load({
   },
 });
 
-// const framerate = 60;
-// let sysTime = Date.now();
-// let lag = framerate;
-
-// function loop() {
-//   lag += Date.now() - sysTime;
-//   let delta = Date.now() - sysTime;
-//   sysTime = Date.now();
-//   while (lag >= 1000 / framerate) {
-//     update(camera, player, keys);
-//     lag -= 1000 / framerate;
-//   }
-//   render({ canvas, c, camera, delta });
-//   requestAnimationFrame(loop);
-// }
-
 let frameCount = 0;
 let fpsInterval, startTime, now, then, elapsed;
 
