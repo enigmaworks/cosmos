@@ -22,7 +22,10 @@ WebFont.load({
     document.body.addEventListener("keydown", keyDownHandler);
     document.body.addEventListener("keyup", keyUpHandler);
     startAnimating(60);
-    const map = document.querySelector(".map");
+
+    const map = document.createElement("canvas");
+    map.classList.add("map");
+    document.body.appendChild(map);
     map.onmousedown = dragMouseDown;
     let pos1,
       pos2,
