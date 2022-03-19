@@ -7,7 +7,7 @@ export default function (planets, player) {
 
   const MASS_CONSTANT = 1 / 2;
   const GRAVITATION_COEFFICIENT = 2.35; // in real life, 11
-  const GRAVITY_ROTATION_SPEED = 1 / 15;
+  const GRAVITY_ROTATION_SPEED = 1 / 20;
 
   const G = 6.67408 * 10 ** -GRAVITATION_COEFFICIENT;
 
@@ -60,7 +60,7 @@ export default function (planets, player) {
     const angle_distance =
       ((rotational_gravity - player.rotation + Math.PI) % (Math.PI * 2)) - Math.PI;
 
-    force.r += angle_distance * (gravity_stregnth ** 1.5 * GRAVITY_ROTATION_SPEED);
+    force.r += angle_distance * (gravity_stregnth ** 2 * GRAVITY_ROTATION_SPEED);
 
     if (dist <= size + player.size) {
       const collisonX = (player.x * size + x * player.size) / (player.size + size);
@@ -76,7 +76,7 @@ export default function (planets, player) {
       force.x -= player.xVel;
       force.y -= player.yVel;
 
-      const hulldamage = 50 * Math.log(Math.hypot(player.xVel, player.yVel) - 3);
+      const hulldamage = 40 * Math.log(Math.hypot(player.xVel, player.yVel) - 3.5);
       if (!(hulldamage < 0) && hulldamage) player.hullIntegrity -= hulldamage;
     } else {
       force.x += x_gravity_multiplier * gravity_stregnth;
