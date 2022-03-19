@@ -13,11 +13,7 @@ export function controlsForce(player, keys) {
     }
     player.fuelLevel -= player.boost_max / 200;
   } else {
-    if (player.boost > 1) {
-      player.boost -= 0.04;
-    } else {
-      player.boost = 1;
-    }
+    player.boost = 1;
   }
   boost = player.boost;
   let xForce = 0;
