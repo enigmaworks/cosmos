@@ -4,52 +4,83 @@ export default function (planets, player) {
     y: 0,
     r: 0,
   };
+
+  const MASS_CONSTANT = 1 / 2;
+  const GRAVITATION_COEFFICIENT = 2.35; // in real life, 11
+  const GRAVITY_ROTATION_SPEED = 1 / 10;
+
+  const G = 6.67408 * 10 ** -GRAVITATION_COEFFICIENT;
+
   planets.forEach((planet, i) => {
     const { name, x, y, size, density } = planet;
-    const mass = Math.PI * size ** 2 * density ** (1 / 2);
-    const real_distance = Math.hypot(x - player.x, y - player.y);
-    const G = 6.67408 * 10 ** -2.25;
-    const g = G * (mass / real_distance ** 2);
-    const xDist = Math.hypot(x, player.x);
-    const yDist = Math.hypot(y, player.y);
-    const angle = Math.atan(xDist / yDist);
-    planet.distance = real_distance;
-    planet.gravitationalInfluence = g;
-    planet.angle = angle;
-    let xG = Math.sin(angle);
-    let yG = Math.cos(angle);
+    //area = PI * R^2
+    //mass = density ^ constant * area
+    const mass = Math.PI * size ** 2 * density ** MASS_CONSTANT;
+
+    const dist = Math.hypot(x - player.x, y - player.y);
+
+    const gravity_stregnth = G * (mass / dist ** 2); //gravitational equation
+
+    const x_speed = Math.sqrt((player.x - x) ** 2);
+    const y_speed = Math.sqrt((player.y - y) ** 2);
+    const gravity_direction = Math.atan(x_speed / y_speed);
+
+    planet.distance = dist;
+    planet.gravitationalInfluence = gravity_stregnth;
+
+    let x_gravity_multiplier = Math.sin(gravity_direction);
+    let y_gravity_multiplier = Math.cos(gravity_direction);
+
+    let rotational_gravity = 0; //holds the disired angle of the planet(so the bottom of the player points towards the center of the planet)
+    const halfPI = Math.PI / 2;
+    //sets rotation depending on the quadrant you are in
+    // (-x, -y) top    right
+    // (-x, +y) bottom right
+    // ( x,  y) bottom left
+    // ( x, -y) top    left
     if (player.x > x) {
       if (player.y > y) {
-        xG *= -1;
-        yG *= -1;
+        x_gravity_multiplier *= -1;
+        y_gravity_multiplier *= -1;
+        rotational_gravity = halfPI * 4 - gravity_direction;
       } else {
-        xG *= -1;
+        x_gravity_multiplier *= -1;
+        rotational_gravity = halfPI * 2 + gravity_direction;
       }
     } else {
       if (player.y > y) {
-        yG *= -1;
+        y_gravity_multiplier *= -1;
+        rotational_gravity = gravity_direction;
+      } else {
+        rotational_gravity = halfPI * 2 - gravity_direction;
       }
     }
-    if (real_distance <= size + player.size) {
-      const collisonX =
-        (player.x * size + x * player.size) / (player.size + size);
-      const collisonY =
-        (player.y * size + y * player.size) / (player.size + size);
+
+    //shortest distance between angles; https://stackoverflow.com/questions/28036652/finding-the-shortest-distance-between-two-angles
+    const angle_distance =
+      ((rotational_gravity - player.rotation + Math.PI) % (Math.PI * 2)) - Math.PI;
+
+    force.r += angle_distance * (gravity_stregnth * GRAVITY_ROTATION_SPEED);
+
+    if (dist <= size + player.size) {
+      const collisonX = (player.x * size + x * player.size) / (player.size + size);
+      const collisonY = (player.y * size + y * player.size) / (player.size + size);
+
       const distInsidePlanet = size - Math.hypot(collisonX - x, collisonY - y);
-      const distInsidePlayer =
-        player.size - Math.hypot(collisonX - player.x, collisonY - player.y);
+      const distInsidePlayer = player.size - Math.hypot(collisonX - player.x, collisonY - player.y);
       const distToMoveOut = distInsidePlanet + distInsidePlayer;
-      player.x -= player.xVel * distToMoveOut * g;
-      player.y -= player.yVel * distToMoveOut * g;
+
+      player.x -= player.xVel * distToMoveOut * gravity_stregnth;
+      player.y -= player.yVel * distToMoveOut * gravity_stregnth;
+
       force.x -= player.xVel;
       force.y -= player.yVel;
-      const hulldamage =
-        50 * Math.log(Math.hypot(player.xVel, player.yVel) - 3);
-      // console.log(hulldamage);
+
+      const hulldamage = 50 * Math.log(Math.hypot(player.xVel, player.yVel) - 3);
       if (!(hulldamage < 0) && hulldamage) player.hullIntegrity -= hulldamage;
     } else {
-      force.x += xG * g;
-      force.y += yG * g;
+      force.x += x_gravity_multiplier * gravity_stregnth;
+      force.y += y_gravity_multiplier * gravity_stregnth;
     }
   });
 
