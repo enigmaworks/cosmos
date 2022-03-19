@@ -1,5 +1,6 @@
 export default [
   {
+    name: "Homebase",
     density: 1,
     size: 450,
     x: 1040,
@@ -14,6 +15,7 @@ export default [
     atmosphere: "orange",
   },
   {
+    name: "The Blue One",
     density: 0.5,
     size: 650,
     x: 3000,
@@ -28,6 +30,7 @@ export default [
     atmosphere: "aqua",
   },
   {
+    name: "Thicc",
     density: 2.5,
     size: 250,
     x: -6034,
@@ -42,6 +45,7 @@ export default [
     atmosphere: "salmon",
   },
   {
+    name: "The Other Blue One",
     density: 1.15,
     size: 350,
     x: -5024,
@@ -56,6 +60,7 @@ export default [
     atmosphere: "teal",
   },
   {
+    name: "irON",
     density: 0.8,
     size: 750,
     x: -12037,
@@ -70,6 +75,7 @@ export default [
     atmosphere: "slategray",
   },
   {
+    name: "Frank's Gass Giant",
     density: 1,
     size: 400,
     x: 12037,
@@ -81,6 +87,7 @@ export default [
     atmosphere: "green",
   },
   {
+    name: "Grapes",
     density: 1,
     size: 500,
     x: 11037,
@@ -88,6 +95,18 @@ export default [
     fill: {
       type: "color",
       f: "purple",
+    },
+    atmosphere: "magenta",
+  },
+  {
+    name: "In A Galaxy Far, Far Away",
+    density: 1,
+    size: 550,
+    x: 40037,
+    y: 20054,
+    fill: {
+      type: "red",
+      f: "blue",
     },
     atmosphere: "purple",
   },
