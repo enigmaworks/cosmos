@@ -7,7 +7,7 @@ export default function (planets, player) {
 
   const MASS_CONSTANT = 1 / 2;
   const GRAVITATION_COEFFICIENT = 2.35; // in real life, 11
-  const GRAVITY_ROTATION_SPEED = 1 / 10;
+  const GRAVITY_ROTATION_SPEED = 1 / 15;
 
   const G = 6.67408 * 10 ** -GRAVITATION_COEFFICIENT;
 
@@ -60,7 +60,7 @@ export default function (planets, player) {
     const angle_distance =
       ((rotational_gravity - player.rotation + Math.PI) % (Math.PI * 2)) - Math.PI;
 
-    force.r += angle_distance * (gravity_stregnth * GRAVITY_ROTATION_SPEED);
+    force.r += angle_distance * (gravity_stregnth ** 1.5 * GRAVITY_ROTATION_SPEED);
 
     if (dist <= size + player.size) {
       const collisonX = (player.x * size + x * player.size) / (player.size + size);
