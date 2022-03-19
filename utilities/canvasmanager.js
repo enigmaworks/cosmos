@@ -19,5 +19,6 @@ export const CanvasManager = {
       renderUnits.maxY = rect.height * scale;
     }
     c.translate((rect.width * scale) / 2, (rect.height * scale) / 2);
+    return { xmax: rect.width * scale, ymax: rect.width * scale };
   },
 };
