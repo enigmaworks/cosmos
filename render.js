@@ -13,12 +13,7 @@ let tick = 0;
 let fps;
 export function render({ c, fps, camera }) {
   tick++;
-  c.clearRect(
-    renderUnits.maxX / -2,
-    renderUnits.maxY / -2,
-    renderUnits.maxX,
-    renderUnits.maxY
-  );
+  c.clearRect(renderUnits.maxX / -2, renderUnits.maxY / -2, renderUnits.maxX, renderUnits.maxY);
   const items = { c, camera, player, planets, renderUnits, player, keys };
   renderStars(items);
   atmospheres(items);
@@ -33,16 +28,10 @@ export function render({ c, fps, camera }) {
       color: "#eee",
     }
   );
-  text(
-    `${fps} FPS`,
-    -25 + renderUnits.maxX / 2,
-    25 + renderUnits.maxY / -2,
-    c,
-    {
-      color: "#eee",
-      align: "right",
-    }
-  );
+  text(`${fps} FPS`, -25 + renderUnits.maxX / 2, 25 + renderUnits.maxY / -2, c, {
+    color: "#eee",
+    align: "right",
+  });
   //sin returns between -1 and 1, convert it to a % by making it positive(add one), dividing it by two(maximum value), and then multiply it by the desired maxvalue, then add the desired minimum
   let color = ((Math.sin(tick / 10) + 1) / 2) * 100 + 50;
   text(
@@ -55,9 +44,7 @@ export function render({ c, fps, camera }) {
     }
   );
   text(
-    `Hull Integrity: ${Math.round(
-      (player.hullIntegrity / player.hullIntegrity_max) * 100
-    )}%`,
+    `Hull Integrity: ${Math.round((player.hullIntegrity / player.hullIntegrity_max) * 100)}%`,
     25 + renderUnits.maxX / -2,
     100 + renderUnits.maxY / -2,
     c,
@@ -69,18 +56,14 @@ export function render({ c, fps, camera }) {
     }
   );
   text(
-    `Oxygen: ${Math.round(
-      (player.oxygenLevel / player.oxygenLevel_max) * 100
-    )}%`,
+    `Oxygen: ${Math.round((player.oxygenLevel / player.oxygenLevel_max) * 100)}%`,
     25 + renderUnits.maxX / -2,
     125 + renderUnits.maxY / -2,
     c,
     { color: "#ddd" }
   );
   text(
-    `Boost: ${Math.round(
-      ((player.boost - 1) / (player.boost_max - 1)) * 100
-    )}%`,
+    `Boost: ${Math.round(((player.boost - 1) / (player.boost_max - 1)) * 100)}%`,
     25 + renderUnits.maxX / -2,
     175 + renderUnits.maxY / -2,
     c,
