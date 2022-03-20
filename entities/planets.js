@@ -128,4 +128,20 @@ export default [
     },
     atmosphere: "#CA1212",
   },
+  {
+    name: "Rainbow",
+    density: 0.75,
+    size: 450,
+    x: -1037,
+    y: -1054,
+    fill: {
+      type: "gradient",
+      f: {
+        stop2: { s: 0, c: "#f0f" },
+        stop3: { s: 0.5, c: "#dd2" },
+        stop4: { s: 1, c: "#0ff" },
+      },
+    },
+    atmosphere: "#888",
+  },
 ];
