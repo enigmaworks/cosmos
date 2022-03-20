@@ -60,7 +60,7 @@ export default function (planets, player) {
     const angle_distance =
       ((rotational_gravity - player.rotation + Math.PI) % (Math.PI * 2)) - Math.PI;
 
-    force.r += angle_distance * (gravity_stregnth ** 2 * GRAVITY_ROTATION_SPEED);
+    force.r += angle_distance * (gravity_stregnth ** 1.75 * GRAVITY_ROTATION_SPEED);
 
     if (dist <= size + player.size) {
       const collisonX = (player.x * size + x * player.size) / (player.size + size);
