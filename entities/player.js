@@ -10,7 +10,7 @@ export default {
   boost_max: 5.83,
   boost_warmup: 0.025,
   boost: 1,
-  fuelLevel: 140,
+  fuelLevel: Infinity,
   fuelLevel_max: 140,
   oxygenLevel: 200,
   oxygenLevel_max: 200,
