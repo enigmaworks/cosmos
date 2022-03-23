@@ -5,13 +5,12 @@ import renderPlayer from "./renderers/player.js";
 import { renderStars } from "./renderers/stars.js";
 import player from "./entities/player.js";
 import atmospheres from "./renderers/atmospheres.js";
-import planets from "./entities/planets.js";
 import minimap from "./renderers/minimap.js";
 import keys from "./utilities/keys.js";
 
 let tick = 0;
 let fps;
-export function render({ c, fps, camera }) {
+export function render({ c, fps, camera, planets }) {
   tick++;
   c.clearRect(renderUnits.maxX / -2, renderUnits.maxY / -2, renderUnits.maxX, renderUnits.maxY);
   const items = { c, camera, player, planets, renderUnits, player, keys };

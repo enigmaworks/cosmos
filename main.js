@@ -65,7 +65,7 @@ function animate(newtime) {
   const fps = Math.round((1000 / (sinceStart / ++frameCount)) * 100) / 100;
   if (elapsed > fpsInterval) {
     then = now - (elapsed % fpsInterval);
-    update(camera, player, keys);
-    render({ canvas, c, camera, fps });
+    update(camera, player, keys, planets);
+    render({ canvas, c, camera, fps, planets });
   }
 }
