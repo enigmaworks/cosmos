@@ -2,17 +2,37 @@ import { text } from "../utilities/textrenderer.js";
 
 export default function (c, planets, mapsize) {
   let farthestaway = 0;
-  planets.forEach(({ x, y }) => {
-    if (x > farthestaway) farthestaway = x;
-    if (y > farthestaway) farthestaway = y;
+  planets.forEach(({ x, y, size }) => {
+    if (x + size > farthestaway) farthestaway = x + size;
+    if (y + size > farthestaway) farthestaway = y + size;
+    if (Math.abs(x - size) > farthestaway) farthestaway = Math.abs(x - size);
+    if (Math.abs(y - size) > farthestaway) farthestaway = Math.abs(y - size);
   });
 
-  let scale = (farthestaway * 2.25) / mapsize;
-
+  let scale = ((farthestaway + 1) * 2.1) / mapsize;
+  // console.log(planets, c, farthestaway);
   for (let i = 0; i < planets.length; i++) {
     const planet = planets[i];
     c.beginPath();
-    c.fillStyle = planet.atmosphere;
+    let fill = "#888";
+    if (planet.fill.type === "color") {
+      fill = planet.fill.f;
+    }
+    if (planet.fill.type === "img") {
+      fill = c.createPattern(planet.fill.f, "repeat");
+    }
+    if (planet.fill.type === "gradient") {
+      fill = c.createLinearGradient(
+        (planet.x + planet.size / 2) / scale,
+        (planet.y + planet.size / 2) / scale,
+        (planet.x - planet.size / 2) / scale,
+        (planet.y - planet.size / 2) / scale
+      );
+      planet.fill.f.forEach((stop) => {
+        fill.addColorStop(stop.s, stop.c);
+      });
+    }
+    c.fillStyle = fill;
     c.arc(planet.x / scale, planet.y / scale, planet.size / scale, 0, Math.PI * 2);
     c.fill();
     text(
@@ -21,13 +41,13 @@ export default function (c, planets, mapsize) {
       (planet.y + planet.size) / scale + 2,
       c,
       {
-        size: planet.size / scale + 6,
+        size: planet.size / 40,
         color: "#eee",
         align: "center",
       }
     );
     text(`${planet.name}`, planet.x / scale, (planet.y - planet.size) / scale - 2, c, {
-      size: planet.size / scale + 6,
+      size: planet.size / 40,
       color: "#eee",
       baseline: "bottom",
       align: "center",
