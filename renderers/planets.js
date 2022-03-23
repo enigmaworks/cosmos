@@ -24,7 +24,7 @@ export default function ({ c, camera, planets, renderUnits }) {
           -planet.size / 2,
           -planet.size / 2
         );
-        Object.values(planet.fill.f).forEach((stop) => {
+        planet.fill.f.forEach((stop) => {
           fill.addColorStop(stop.s, stop.c);
         });
       }

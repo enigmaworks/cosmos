@@ -7,10 +7,10 @@ export default [
     y: 13440,
     fill: {
       type: "gradient",
-      f: {
-        stop1: { s: 0, c: "red" },
-        stop2: { s: 1, c: "orange" },
-      },
+      f: [
+        { s: 0, c: "red" },
+        { s: 1, c: "orange" },
+      ],
     },
     atmosphere: "orange",
   },
@@ -22,10 +22,10 @@ export default [
     y: -9000,
     fill: {
       type: "gradient",
-      f: {
-        stop1: { s: 0, c: "aqua" },
-        stop2: { s: 1, c: "blue" },
-      },
+      f: [
+        { s: 0, c: "aqua" },
+        { s: 1, c: "blue" },
+      ],
     },
     atmosphere: "aqua",
   },
@@ -37,10 +37,10 @@ export default [
     y: -4051,
     fill: {
       type: "gradient",
-      f: {
-        stop1: { s: 0, c: "salmon" },
-        stop2: { s: 1, c: "pink" },
-      },
+      f: [
+        { s: 0, c: "salmon" },
+        { s: 1, c: "pink" },
+      ],
     },
     atmosphere: "salmon",
   },
@@ -52,10 +52,10 @@ export default [
     y: 8051,
     fill: {
       type: "gradient",
-      f: {
-        stop1: { s: 0, c: "teal" },
-        stop2: { s: 1, c: "aqua" },
-      },
+      f: [
+        { s: 0, c: "teal" },
+        { s: 1, c: "aqua" },
+      ],
     },
     atmosphere: "teal",
   },
@@ -67,10 +67,10 @@ export default [
     y: 2054,
     fill: {
       type: "gradient",
-      f: {
-        stop1: { s: 0, c: "lightgray" },
-        stop2: { s: 1, c: "slategray" },
-      },
+      f: [
+        { s: 0, c: "lightgray" },
+        { s: 1, c: "slategray" },
+      ],
     },
     atmosphere: "slategray",
   },
@@ -106,10 +106,10 @@ export default [
     y: 31054,
     fill: {
       type: "gradient",
-      f: {
-        stop1: { s: 0, c: "red" },
-        stop2: { s: 1, c: "blue" },
-      },
+      f: [
+        { s: 0, c: "red" },
+        { s: 1, c: "blue" },
+      ],
     },
     atmosphere: "purple",
   },
@@ -121,10 +121,10 @@ export default [
     y: -26054,
     fill: {
       type: "gradient",
-      f: {
-        stop1: { s: 0, c: "#CA1212" },
-        stop2: { s: 1, c: "#A8EA17" },
-      },
+      f: [
+        { s: 0, c: "#CA1212" },
+        { s: 1, c: "#A8EA17" },
+      ],
     },
     atmosphere: "#CA1212",
   },
@@ -132,15 +132,15 @@ export default [
     name: "Rainbow",
     density: 0.75,
     size: 450,
-    x: -1037,
-    y: -1054,
+    x: -12037,
+    y: -3054,
     fill: {
       type: "gradient",
-      f: {
-        stop2: { s: 0, c: "#f0f" },
-        stop3: { s: 0.5, c: "#dd2" },
-        stop4: { s: 1, c: "#0ff" },
-      },
+      f: [
+        { s: 0, c: "#f0f" },
+        { s: 0.5, c: "#dd2" },
+        { s: 1, c: "#0ff" },
+      ],
     },
     atmosphere: "#888",
   },
