@@ -10,7 +10,7 @@ const { canvas, c } = CanvasManager.create();
 
 import camera from "./entities/camera.js";
 import player from "./entities/player.js";
-import planets from "./entities/planets.js";
+import planets from "./entities/planets_2.js";
 
 WebFont.load({
   google: {
