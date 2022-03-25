@@ -10,22 +10,47 @@ canvas {
   background-color: black;
   margin: 1em auto;
 }
+input {
+  padding: 0.25rem;
+  border: 1px solid #888;
+  background: #fffb;
+  border-radius: 0.25rem;
+}
 input[type="number"] {
   width: 5rem;
 }
 input[type="text"] {
   width: 10rem;
 }
-.name {
+input.name {
   display: block;
   width: 100%;
+  text-align: center;
+  font-weight: bold;
+  border: none;
 }
 .container > * {
-  margin-block: 2rem;
+  margin-bottom: 1rem;
 }
-
+.container > *:nth-child(even) {
+  background: #0084;
+}
+.container > *:nth-child(odd) {
+  background: white;
+}
+.container {
+  max-height: 15rem;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  border: 2px solid black;
+  margin-top: 1rem;
+}
+.fill {
+  background-color: #eee8;
+}
 .gradient-stop {
   display: flex;
+  padding-left: 1rem;
 }
 .add,
 .remove,
