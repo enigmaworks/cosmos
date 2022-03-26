@@ -1,7 +1,11 @@
 export function text(str, x, y, c, styles = {}) {
   const defualts = {
-    color: "#888",
+    color: "#aaa",
+    stroke_color: "#777",
     size: 16,
+    linewidth: 2,
+    stroke: false,
+    fill: true,
     font: "'Exo 2', sans-serif",
     weight: "200",
     align: "left",
@@ -10,17 +14,34 @@ export function text(str, x, y, c, styles = {}) {
     maxwidth: "500",
     baseline: "top",
   };
-  const { color, size, font, weight, align, style, variant, maxwidth, baseline } = {
+  const {
+    stroke,
+    fill,
+    color,
+    size,
+    font,
+    weight,
+    align,
+    style,
+    variant,
+    maxwidth,
+    baseline,
+    linewidth,
+    stroke_color,
+  } = {
     ...defualts,
     ...styles,
   };
   c.font = `${style} ${variant} ${weight} ${size}px ${font}`;
   c.textAlign = align;
   c.fillStyle = color;
+  c.strokeStyle = stroke_color;
+  c.linewidth = linewidth;
   c.textBaseline = baseline;
   let lines = getLines(str, maxwidth, c);
   lines.forEach(function (line, lineNum) {
-    c.fillText(line, x, y + lineNum * size);
+    if (fill) c.fillText(line, x, y + lineNum * size);
+    if (stroke) c.strokeText(line, x, y + lineNum * size);
   });
 }
 
