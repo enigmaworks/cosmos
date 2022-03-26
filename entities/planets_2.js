@@ -3,8 +3,8 @@ export default [
     name: "Thrynicus",
     density: 1,
     size: 400,
-    x: -1100,
-    y: -1200,
+    x: -400,
+    y: -400,
     fill: {
       type: "gradient",
       f: [
