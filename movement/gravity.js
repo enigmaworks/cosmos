@@ -20,7 +20,7 @@ export default function (planets, player) {
     const dist = Math.hypot(x - player.x, y - player.y);
 
     const gravity_stregnth = G * (mass / dist ** 2); //gravitational equation
-
+    planet.gravity_stregnth = gravity_stregnth;
     const x_speed = Math.sqrt((player.x - x) ** 2);
     const y_speed = Math.sqrt((player.y - y) ** 2);
     const gravity_direction = Math.atan(x_speed / y_speed);
@@ -30,7 +30,6 @@ export default function (planets, player) {
 
     let x_gravity_multiplier = Math.sin(gravity_direction);
     let y_gravity_multiplier = Math.cos(gravity_direction);
-
     let rotational_gravity = 0; //holds the disired angle of the planet(so the bottom of the player points towards the center of the planet)
     const halfPI = Math.PI / 2;
     //sets rotation depending on the quadrant you are in
@@ -55,33 +54,36 @@ export default function (planets, player) {
         rotational_gravity = halfPI * 2 - gravity_direction;
       }
     }
-
+    planet.x_gravity_multiplier = x_gravity_multiplier;
+    planet.y_gravity_multiplier = y_gravity_multiplier;
     //shortest distance between angles; https://stackoverflow.com/questions/28036652/finding-the-shortest-distance-between-two-angles
     const angle_distance =
       ((rotational_gravity - player.rotation + Math.PI) % (Math.PI * 2)) - Math.PI;
 
     force.r += angle_distance * (gravity_stregnth ** 1.75 * GRAVITY_ROTATION_SPEED);
+    force.x += x_gravity_multiplier * gravity_stregnth;
+    force.y += y_gravity_multiplier * gravity_stregnth;
 
-    if (dist <= size + player.size) {
-      const collisonX = (player.x * size + x * player.size) / (player.size + size);
-      const collisonY = (player.y * size + y * player.size) / (player.size + size);
+    // if (dist <= size + player.size) {
+    //   const collisonX = (player.x * size + x * player.size) / (player.size + size);
+    //   const collisonY = (player.y * size + y * player.size) / (player.size + size);
 
-      const distInsidePlanet = size - Math.hypot(collisonX - x, collisonY - y);
-      const distInsidePlayer = player.size - Math.hypot(collisonX - player.x, collisonY - player.y);
-      const distToMoveOut = distInsidePlanet + distInsidePlayer;
+    //   const distInsidePlanet = size - Math.hypot(collisonX - x, collisonY - y);
+    //   const distInsidePlayer = player.size - Math.hypot(collisonX - player.x, collisonY - player.y);
+    //   const distToMoveOut = distInsidePlanet + distInsidePlayer;
 
-      player.x -= player.xVel * distToMoveOut * gravity_stregnth;
-      player.y -= player.yVel * distToMoveOut * gravity_stregnth;
+    //   player.x -= player.xVel * distToMoveOut * gravity_stregnth;
+    //   player.y -= player.yVel * distToMoveOut * gravity_stregnth;
 
-      force.x -= player.xVel;
-      force.y -= player.yVel;
+    //   force.x -= player.xVel;
+    //   force.y -= player.yVel;
 
-      const hulldamage = 40 * Math.log(Math.hypot(player.xVel, player.yVel) - 3.5);
-      if (!(hulldamage < 0) && hulldamage) player.hullIntegrity -= hulldamage;
-    } else {
-      force.x += x_gravity_multiplier * gravity_stregnth;
-      force.y += y_gravity_multiplier * gravity_stregnth;
-    }
+    //   const hulldamage = 40 * Math.log(Math.hypot(player.xVel, player.yVel) - 3.5);
+    //   if (!(hulldamage < 0) && hulldamage) player.hullIntegrity -= hulldamage;
+    // } else {
+    //   force.x += x_gravity_multiplier * gravity_stregnth;
+    //   force.y += y_gravity_multiplier * gravity_stregnth;
+    // }
   });
 
   return force;
