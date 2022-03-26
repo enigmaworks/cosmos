@@ -29,7 +29,7 @@ export default function ({ c, planets, camera, renderUnits }) {
       c.fill();
 
       c.fillStyle = atmosphere;
-      c.globalAlpha = 0.15;
+      c.globalAlpha = 0.1;
 
       c.beginPath();
       c.arc(0, 0, atmoshphere_size, 0, Math.PI * 2);
