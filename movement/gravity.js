@@ -63,27 +63,6 @@ export default function (planets, player) {
     force.r += angle_distance * (gravity_stregnth ** 1.75 * GRAVITY_ROTATION_SPEED);
     force.x += x_gravity_multiplier * gravity_stregnth;
     force.y += y_gravity_multiplier * gravity_stregnth;
-
-    // if (dist <= size + player.size) {
-    //   const collisonX = (player.x * size + x * player.size) / (player.size + size);
-    //   const collisonY = (player.y * size + y * player.size) / (player.size + size);
-
-    //   const distInsidePlanet = size - Math.hypot(collisonX - x, collisonY - y);
-    //   const distInsidePlayer = player.size - Math.hypot(collisonX - player.x, collisonY - player.y);
-    //   const distToMoveOut = distInsidePlanet + distInsidePlayer;
-
-    //   player.x -= player.xVel * distToMoveOut * gravity_stregnth;
-    //   player.y -= player.yVel * distToMoveOut * gravity_stregnth;
-
-    //   force.x -= player.xVel;
-    //   force.y -= player.yVel;
-
-    //   const hulldamage = 40 * Math.log(Math.hypot(player.xVel, player.yVel) - 3.5);
-    //   if (!(hulldamage < 0) && hulldamage) player.hullIntegrity -= hulldamage;
-    // } else {
-    //   force.x += x_gravity_multiplier * gravity_stregnth;
-    //   force.y += y_gravity_multiplier * gravity_stregnth;
-    // }
   });
 
   return force;
