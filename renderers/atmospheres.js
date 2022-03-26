@@ -1,5 +1,5 @@
 export default function ({ c, planets, camera, renderUnits }) {
-  const ATMOSPHERE_SIZE_MULTIPLIER = 3.1;
+  const ATMOSPHERE_SIZE_MULTIPLIER = 4.1;
 
   planets.forEach((planet) => {
     const atmoshphere_size = planet.size * ATMOSPHERE_SIZE_MULTIPLIER + 100;
@@ -22,14 +22,14 @@ export default function ({ c, planets, camera, renderUnits }) {
       c.translate(planet.x - camera.x, planet.y - camera.y);
 
       c.fillStyle = background_fade;
-      c.globalAlpha = 0.75;
+      c.globalAlpha = 0.85;
 
       c.beginPath();
       c.arc(0, 0, atmoshphere_size, 0, Math.PI * 2);
       c.fill();
 
       c.fillStyle = atmosphere;
-      c.globalAlpha = 0.125;
+      c.globalAlpha = 0.15;
 
       c.beginPath();
       c.arc(0, 0, atmoshphere_size, 0, Math.PI * 2);
