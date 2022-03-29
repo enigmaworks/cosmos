@@ -1,0 +1,21 @@
+export default {
+  MassConstant: 1 / 2,
+  RotationalGravityMultiplier: 1 / 20,
+  GravitationalConstant: 6.67408 * 10 ** -2.35,
+  AtmosphereRendererSizeMultiplier: 4.1,
+  TextDefualtOptions: {
+    color: "#aaa",
+    stroke_color: "#777",
+    size: 16,
+    linewidth: 2,
+    stroke: false,
+    fill: true,
+    font: "'Exo 2', sans-serif",
+    weight: "200",
+    align: "left",
+    style: "normal",
+    variant: "normal",
+    maxwidth: "500",
+    baseline: "top",
+  },
+};
