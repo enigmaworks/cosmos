@@ -9,8 +9,10 @@ import { render } from "./render.js";
 const { canvas, c } = CanvasManager.create();
 
 import camera from "./entities/camera.js";
-import player from "./entities/player.js";
 import planets from "./entities/planets_2.js";
+import Player from "./entities/player.js";
+
+let player;
 
 WebFont.load({
   google: {
@@ -43,6 +45,8 @@ WebFont.load({
       let { xmax } = CanvasManager.setResolution(starmap, starmap_c);
       renderStarmap(starmap_c, planets, xmax);
     };
+
+    player = new Player();
   },
 });
 
@@ -66,6 +70,6 @@ function animate(newtime) {
   if (elapsed > fpsInterval) {
     then = now - (elapsed % fpsInterval);
     update(camera, player, keys, planets);
-    render({ canvas, c, camera, fps, planets });
+    render({ canvas, c, camera, fps, planets, player });
   }
 }
