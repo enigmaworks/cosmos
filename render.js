@@ -12,11 +12,9 @@ export function render({ c, fps, camera, planets, player }) {
   c.clearRect(renderUnits.maxX / -2, renderUnits.maxY / -2, renderUnits.maxX, renderUnits.maxY);
   const items = { c, camera, player, planets, renderUnits, player, keys };
   renderStars(items);
-  // atmospheres(items);
   minimap(items);
-  // renderPlanets(items);
   planets.renderBodies(items);
-  player.render({ c, camera, keys }); // renderPlayer(items);
+  player.render({ c, camera, keys });
 
   text(`press [ M ] to toggle starmap`, 15 + renderUnits.maxX / -2, -15 + renderUnits.maxY / 2, c, {
     color: "#bbb",

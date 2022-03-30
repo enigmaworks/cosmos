@@ -31,12 +31,8 @@ function handleFiles() {
   reader.readAsText(fileList[0]);
   reader.addEventListener("load", () => {
     let res = reader.result;
-    // let res2 = res.replace(/export default /, "");
-    // let res3 = res2.replace(/\\n/, "");
-    // planets = JSON.stringify(re);
     console.log(JSON.parse(res));
     planets = JSON.parse(res);
-    // console.log(planets);
     generateHTML(planets);
   });
 }

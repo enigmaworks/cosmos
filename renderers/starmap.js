@@ -10,7 +10,6 @@ export default function (c, planets, mapsize) {
   });
 
   let scale = ((farthestaway + 1) * 2.1) / mapsize;
-  // console.log(planets, c, farthestaway);
   for (let i = 0; i < planets.length; i++) {
     const planet = planets[i];
     c.beginPath();

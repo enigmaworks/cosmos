@@ -1,6 +1,5 @@
 import { CanvasManager } from "./utilities/canvasmanager.js";
 import keys, { keyUpHandler, keyDownHandler } from "./utilities/keys.js";
-import elementDrag from "./utilities/elementdrag.js";
 import renderStarmap from "./renderers/starmap.js";
 
 import { update } from "./update.js";
@@ -30,7 +29,6 @@ function fontsReady() {
       const minimap = document.createElement("canvas");
       minimap.classList.add("map");
       document.body.appendChild(minimap);
-      // minimap.onmousedown = elementDrag;
 
       const starmap = document.createElement("canvas");
       const starmap_c = starmap.getContext("2d");
