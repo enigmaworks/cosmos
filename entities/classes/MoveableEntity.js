@@ -1,4 +1,4 @@
-import GlobalConfig from "../../GlobalConfig.js";
+import GlobalConfig from "../../gamedata/settings.js";
 import StaticEntity from "./StaticEntity.js";
 
 export default class MoveableEntity extends StaticEntity {
