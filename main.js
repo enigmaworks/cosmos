@@ -8,11 +8,12 @@ import { render } from "./render.js";
 
 const { canvas, c } = CanvasManager.create();
 
-import camera from "./entities/camera.js";
 import planets from "./entities/planets_2.js";
 import Player from "./entities/player.js";
+import StaticEntity from "./entities/StaticEntity.js";
 
 let player;
+let camera;
 
 WebFont.load({
   google: {
@@ -47,6 +48,7 @@ WebFont.load({
     };
 
     player = new Player();
+    camera = new StaticEntity(0, 0, 0, 0);
   },
 });
 
