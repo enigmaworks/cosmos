@@ -17,8 +17,8 @@ export default function ({ camera, planets, player }) {
 
   map.clearRect((-mapsize * scale) / 2, (-mapsize * scale) / 2, mapsize * scale, mapsize * scale);
 
-  for (let i = 0; i < planets.length; i++) {
-    const planet = planets[i];
+  for (let i = 0; i < planets.bodies.length; i++) {
+    const planet = planets.bodies[i];
     if (
       planet.x - camera.x + planet.size > (-mapsize * scale) / 2 &&
       planet.x - camera.x - planet.size < (mapsize * scale) / 2 &&

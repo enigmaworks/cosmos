@@ -1,8 +1,6 @@
 import { text } from "./utilities/textrenderer.js";
 import renderUnits from "./utilities/units.js";
-import renderPlanets from "./renderers/planets.js";
 import { renderStars } from "./renderers/stars.js";
-import atmospheres from "./renderers/atmospheres.js";
 import minimap from "./renderers/minimap.js";
 import keys from "./utilities/keys.js";
 
@@ -14,9 +12,10 @@ export function render({ c, fps, camera, planets, player }) {
   c.clearRect(renderUnits.maxX / -2, renderUnits.maxY / -2, renderUnits.maxX, renderUnits.maxY);
   const items = { c, camera, player, planets, renderUnits, player, keys };
   renderStars(items);
-  atmospheres(items);
+  // atmospheres(items);
   minimap(items);
-  renderPlanets(items);
+  // renderPlanets(items);
+  planets.renderBodies(items);
   player.render({ c, camera, keys }); // renderPlayer(items);
 
   text(`press [ M ] to toggle starmap`, 15 + renderUnits.maxX / -2, -15 + renderUnits.maxY / 2, c, {

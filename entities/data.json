@@ -1,0 +1,32 @@
+[
+  {
+    "name": "New Planet",
+    "density": 1,
+    "size": 400,
+    "x": 1000,
+    "y": 1000,
+    "fill": {
+      "type": "gradient",
+      "f": [
+        { "s": 0, "c": "red" },
+        { "s": 1, "c": "yellow" }
+      ]
+    },
+    "atmosphere": "yellow"
+  },
+  {
+    "name": "Ask me",
+    "density": 4,
+    "size": 400,
+    "x": -10000,
+    "y": 0,
+    "fill": {
+      "type": "gradient",
+      "f": [
+        { "s": 0, "c": "green" },
+        { "s": 1, "c": "purple" }
+      ]
+    },
+    "atmosphere": "#888"
+  }
+]

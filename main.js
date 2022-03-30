@@ -8,48 +8,56 @@ import { render } from "./render.js";
 
 const { canvas, c } = CanvasManager.create();
 
-import planets from "./entities/planets_2.js";
+import planets from "./entities/planets.js";
 import Player from "./entities/player.js";
 import StaticEntity from "./entities/StaticEntity.js";
 
 let player;
 let camera;
 
+function fontsReady() {
+  fetch("/entities/data.json")
+    .then((response) => response.json())
+    .then(function (data) {
+      planets.createBodiesWithData(data);
+      player = new Player();
+      camera = new StaticEntity(0, 0, 0, 0);
+
+      CanvasManager.setResolution(canvas, c);
+      document.body.addEventListener("keydown", keyDownHandler);
+      document.body.addEventListener("keyup", keyUpHandler);
+
+      const minimap = document.createElement("canvas");
+      minimap.classList.add("map");
+      document.body.appendChild(minimap);
+      // minimap.onmousedown = elementDrag;
+
+      const starmap = document.createElement("canvas");
+      const starmap_c = starmap.getContext("2d");
+      starmap.classList.add("starmap");
+      document.body.appendChild(starmap);
+      document.body.addEventListener("keydown", (e) => {
+        if (e.key === "m") starmap.classList.toggle("shown");
+      });
+      let { xmax } = CanvasManager.setResolution(starmap, starmap_c);
+      renderStarmap(starmap_c, planets.bodies, xmax);
+
+      window.onresize = () => {
+        CanvasManager.setResolution(canvas, c);
+        let { xmax } = CanvasManager.setResolution(starmap, starmap_c);
+        renderStarmap(starmap_c, planets.bodies, xmax);
+      };
+
+      startAnimating(60);
+    });
+}
+
 WebFont.load({
   google: {
     families: ["Exo+2:wght@300"],
   },
   timeout: 3000,
-  active: function () {
-    CanvasManager.setResolution(canvas, c);
-    document.body.addEventListener("keydown", keyDownHandler);
-    document.body.addEventListener("keyup", keyUpHandler);
-    startAnimating(60);
-
-    const minimap = document.createElement("canvas");
-    minimap.classList.add("map");
-    document.body.appendChild(minimap);
-    // minimap.onmousedown = elementDrag;
-
-    const starmap = document.createElement("canvas");
-    const starmap_c = starmap.getContext("2d");
-    starmap.classList.add("starmap");
-    document.body.appendChild(starmap);
-    document.body.addEventListener("keydown", (e) => {
-      if (e.key === "m") starmap.classList.toggle("shown");
-    });
-    let { xmax } = CanvasManager.setResolution(starmap, starmap_c);
-    renderStarmap(starmap_c, planets, xmax);
-
-    window.onresize = () => {
-      CanvasManager.setResolution(canvas, c);
-      let { xmax } = CanvasManager.setResolution(starmap, starmap_c);
-      renderStarmap(starmap_c, planets, xmax);
-    };
-
-    player = new Player();
-    camera = new StaticEntity(0, 0, 0, 0);
-  },
+  active: fontsReady,
 });
 
 let frameCount = 0;
