@@ -1,5 +1,5 @@
 import GlobalConfig from "../GlobalConfig.js";
-import StaticEntity from "./StaticEntity.js";
+import StaticEntity from "./classes/StaticEntity.js";
 
 class Planet extends StaticEntity {
   constructor(name, x, y, size) {

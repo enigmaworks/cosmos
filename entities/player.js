@@ -1,4 +1,4 @@
-import MoveabelEntity from "./MoveableEntity.js";
+import MoveabelEntity from "./classes/MoveableEntity.js";
 export default class Player extends MoveabelEntity {
   constructor() {
     super(0, 0, 0, 10);
