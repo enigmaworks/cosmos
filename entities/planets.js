@@ -4,6 +4,7 @@ import StaticEntity from "./StaticEntity.js";
 class Planet extends StaticEntity {
   constructor(name, x, y, size) {
     super(x, y, 0, size);
+    this.name = name;
     this.fill = { type: "color", f: "#888" };
     this.atmosphere = {};
   }
