@@ -20,19 +20,19 @@ export default class MoveableEntity extends StaticEntity {
       const entity = entities[i];
       const distance = Math.hypot(this.x - entity.x, this.y - entity.y);
       if (distance <= this.size + entity.size) {
-        collisions.push({ entity, i });
+        collisions.push(entity);
       }
     }
     return collisions;
   }
   getCollisionForce(entities, type = "static") {
     for (let i = 0; i < entities.length; i++) {
-      const { size, x, y, x_gravity_multiplier, y_gravity_multiplier, gravity_stregnth } =
-        entities[i];
+      const { x, y, size } = entities[i];
 
       if (type === "static") {
         const dist = Math.hypot(x - this.x, y - this.y);
         if (dist <= size + this.size) {
+          const { x_gravity_multiplier, y_gravity_multiplier, gravity_stregnth } = entities[i];
           const collisonX = (this.x * size + x * this.size) / (this.size + size);
           const collisonY = (this.y * size + y * this.size) / (this.size + size);
 
@@ -68,55 +68,56 @@ export default class MoveableEntity extends StaticEntity {
       r: 0,
     };
     for (let i = 0; i < entities.length; i++) {
-      const entity = entities[i];
-      const { x, y, size } = entity;
-      const density = entity.density || 1;
-      const mass = Math.PI * size ** 2 * density ** GlobalConfig.MassConstant;
+      const { x, y, size } = entities[i];
       const dist = Math.hypot(x - this.x, y - this.y);
+
+      const density = entities[i].density || 1;
+      const mass = Math.PI * size ** 2 * density ** GlobalConfig.MassConstant;
       const gravity_stregnth = GlobalConfig.GravitationalConstant * (mass / dist ** 2); //gravitational equation
-      entity.gravity_stregnth = gravity_stregnth;
-      const x_speed = Math.sqrt((this.x - x) ** 2);
-      const y_speed = Math.sqrt((this.y - y) ** 2);
-      const gravity_direction = Math.atan(x_speed / y_speed);
+      entities[i].gravity_stregnth = gravity_stregnth;
+      if (gravity_stregnth > 0.00012) {
+        const gravity_angle = Math.atan(
+          Math.sqrt((this.x - x) ** 2) / Math.sqrt((this.y - y) ** 2)
+        );
+        entities[i].distance = dist;
+        entities[i].gravitationalInfluence = gravity_stregnth;
 
-      entity.distance = dist;
-      entity.gravitationalInfluence = gravity_stregnth;
+        let x_gravity_multiplier = Math.sin(gravity_angle);
+        let y_gravity_multiplier = Math.cos(gravity_angle);
+        let rotational_gravity = 0; //holds the disired angle of the planet(so the bottom of the player points towards the center of the planet)
+        const halfPI = Math.PI / 2;
 
-      let x_gravity_multiplier = Math.sin(gravity_direction);
-      let y_gravity_multiplier = Math.cos(gravity_direction);
-      let rotational_gravity = 0; //holds the disired angle of the planet(so the bottom of the player points towards the center of the planet)
-      const halfPI = Math.PI / 2;
-
-      //sets rotation depending on the quadrant you are in. (-x, -y) = top right; (-x, +y) bottom right;( x,  y) bottom left; ( x, -y) top left
-      if (this.x > x) {
-        if (this.y > y) {
-          x_gravity_multiplier *= -1;
-          y_gravity_multiplier *= -1;
-          rotational_gravity = halfPI * 4 - gravity_direction;
+        //sets rotation depending on the quadrant you are in. (-x, -y) = top right; (-x, +y) bottom right;( x,  y) bottom left; ( x, -y) top left
+        if (this.x > x) {
+          if (this.y > y) {
+            x_gravity_multiplier *= -1;
+            y_gravity_multiplier *= -1;
+            rotational_gravity = halfPI * 4 - gravity_angle;
+          } else {
+            x_gravity_multiplier *= -1;
+            rotational_gravity = halfPI * 2 + gravity_angle;
+          }
         } else {
-          x_gravity_multiplier *= -1;
-          rotational_gravity = halfPI * 2 + gravity_direction;
+          if (this.y > y) {
+            y_gravity_multiplier *= -1;
+            rotational_gravity = gravity_angle;
+          } else {
+            rotational_gravity = halfPI * 2 - gravity_angle;
+          }
         }
-      } else {
-        if (this.y > y) {
-          y_gravity_multiplier *= -1;
-          rotational_gravity = gravity_direction;
-        } else {
-          rotational_gravity = halfPI * 2 - gravity_direction;
-        }
+
+        entities[i].x_gravity_multiplier = x_gravity_multiplier;
+        entities[i].y_gravity_multiplier = y_gravity_multiplier;
+
+        //shortest distance between angles; https://stackoverflow.com/questions/28036652/finding-the-shortest-distance-between-two-angles
+        const angle_distance =
+          ((rotational_gravity - this.rotation + Math.PI) % (Math.PI * 2)) - Math.PI;
+
+        force.r +=
+          angle_distance * (gravity_stregnth ** 1.75 * GlobalConfig.RotationalGravityMultiplier);
+        force.x += x_gravity_multiplier * gravity_stregnth;
+        force.y += y_gravity_multiplier * gravity_stregnth;
       }
-
-      entity.x_gravity_multiplier = x_gravity_multiplier;
-      entity.y_gravity_multiplier = y_gravity_multiplier;
-
-      //shortest distance between angles; https://stackoverflow.com/questions/28036652/finding-the-shortest-distance-between-two-angles
-      const angle_distance =
-        ((rotational_gravity - this.rotation + Math.PI) % (Math.PI * 2)) - Math.PI;
-
-      force.r +=
-        angle_distance * (gravity_stregnth ** 1.75 * GlobalConfig.RotationalGravityMultiplier);
-      force.x += x_gravity_multiplier * gravity_stregnth;
-      force.y += y_gravity_multiplier * gravity_stregnth;
     }
     return force;
   }
