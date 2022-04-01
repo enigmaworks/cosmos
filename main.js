@@ -15,7 +15,7 @@ let player;
 let camera;
 
 function fontsReady() {
-  fetch("/gamedata/planets.json")
+  fetch("/gamedata/planet-data.json")
     .then((response) => response.json())
     .then(function (data) {
       planets.createBodiesWithData(data);
