@@ -50,14 +50,14 @@ export default {
         c.translate(planet.x - camera.x, planet.y - camera.y);
 
         c.fillStyle = background_fade;
-        c.globalAlpha = 0.85;
+        c.globalAlpha = 0.5;
 
         c.beginPath();
         c.arc(0, 0, atmoshphere_size, 0, Math.PI * 2);
         c.fill();
 
         c.fillStyle = atmosphere;
-        c.globalAlpha = 0.1;
+        c.globalAlpha = 0.15;
 
         c.beginPath();
         c.arc(0, 0, atmoshphere_size, 0, Math.PI * 2);

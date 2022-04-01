@@ -1,17 +1,17 @@
 let stars = [];
 
-for (let i = 0; i < (innerHeight + innerWidth) / 1.75; i++) {
+for (let i = 0; i < (innerHeight + innerWidth) / 1.5; i++) {
   let obj = { x: Math.random(), y: Math.random(), alpha: Math.random() };
   stars.push(obj);
 }
 addEventListener("resize", () => {
-  if (stars.length < (innerHeight + innerWidth) / 1.75) {
-    for (let i = 0; i < (innerHeight + innerWidth) / 1.75 - stars.length; i++) {
+  if (stars.length < (innerHeight + innerWidth) / 1.5) {
+    for (let i = 0; i < (innerHeight + innerWidth) / 1.5 - stars.length; i++) {
       let obj = { x: Math.random(), y: Math.random(), alpha: Math.random() };
       stars.push(obj);
       i++;
     }
-  } else if (stars.length > (innerHeight + innerWidth) / 1.75) {
+  } else if (stars.length > (innerHeight + innerWidth) / 1.5) {
     for (let i = 0; i < stars.length - (innerHeight + innerWidth) / 1.75; i++) {
       stars.splice(0, 1);
       i++;
