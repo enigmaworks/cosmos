@@ -17,6 +17,8 @@ export const CanvasManager = {
     if (canvas.id === "canvas") {
       renderUnits.maxX = rect.width * scale;
       renderUnits.maxY = rect.height * scale;
+      renderUnits.maxDimension =
+        rect.height * scale > rect.width * scale ? rect.height * scale : rect.width * scale;
     }
     c.translate((rect.width * scale) / 2, (rect.height * scale) / 2);
     return { xmax: rect.width * scale, ymax: rect.width * scale };
