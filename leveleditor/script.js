@@ -201,8 +201,8 @@ function generateHTML(planets) {
 function download() {
   const levelmap = JSON.stringify(planets);
 
-  const file = new File([levelmap], "planet-data.js", {
-    type: "text/javascript",
+  const file = new File([levelmap], "planet-data.json", {
+    type: "application/json",
   });
 
   const link = document.createElement("a");
