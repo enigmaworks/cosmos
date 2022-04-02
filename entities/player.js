@@ -55,7 +55,7 @@ export default class Player extends MoveabelEntity {
     c.rotate(this.rotation + Math.PI / 2);
     c.translate(-this.size, -this.size * 1.25);
     c.scale(0.5 / this.size, 0.5 / this.size);
-    c.fillStyle = keys.up ? "#fcc" : "#eee";
+    c.fillStyle = "#eee";
     c.fill(path);
     c.restore();
   }
