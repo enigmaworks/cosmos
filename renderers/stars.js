@@ -21,7 +21,6 @@ addEventListener("resize", () => {
 });
 
 export function renderStars({ c, player, camera, renderUnits }) {
-  console.time("this");
   let background = c.createLinearGradient(
     renderUnits.maxX / -2,
     renderUnits.maxY / -2,
@@ -85,5 +84,4 @@ export function renderStars({ c, player, camera, renderUnits }) {
     c.fill();
   });
   c.restore();
-  console.timeEnd("this");
 }

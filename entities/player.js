@@ -47,7 +47,14 @@ export default class Player extends MoveabelEntity {
     this.engine_y = yForce;
     return { r: rotationForce, x: xForce, y: yForce };
   }
-
+  calculateHullDamage(collisons) {
+    for (let i = 0; i < collisons.length; i++) {
+      const hulldamage = 40 * Math.log(Math.hypot(this.velocity.x, this.velocity.y) - 3.5);
+      if (!(hulldamage < 0) && hulldamage) {
+        this.hullIntegrity -= hulldamage;
+      }
+    }
+  }
   render({ c, camera, keys }) {
     const path = new Path2D(this.sprite);
     c.save();
