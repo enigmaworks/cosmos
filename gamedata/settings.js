@@ -1,4 +1,5 @@
 export default {
+  planetScaleFactor: 1.425,
   MassConstant: 1 / 2,
   RotationalGravityMultiplier: 1 / 20,
   GravitationalConstant: 6.67408 * 10 ** -2.35,

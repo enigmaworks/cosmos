@@ -1,3 +1,4 @@
+import settings from "../gamedata/settings.js";
 import GlobalConfig from "../gamedata/settings.js";
 import StaticEntity from "./classes/StaticEntity.js";
 
@@ -18,15 +19,22 @@ class Planet extends StaticEntity {
 
 export default {
   bodies: [],
+
   createBodiesWithData: function (data) {
     data.forEach((element) => {
-      let planet = new Planet(element.name, element.x, element.y, element.size);
+      let planet = new Planet(
+        element.name,
+        element.x,
+        element.y,
+        element.size * settings.planetScaleFactor
+      );
       planet.setDenisty(element.density);
       planet.setFill(element.fill);
       planet.setAtmosphere(element.atmosphere);
       this.bodies.push(planet);
     });
   },
+
   renderBodies: function ({ c, camera, renderUnits }) {
     for (let i = 0; i < this.bodies.length; i++) {
       const planet = this.bodies[i];
