@@ -37,19 +37,20 @@ export default function (c, planets, mapsize) {
     text(
       `(${Math.round(planet.x / 100)},${Math.round(planet.y / -100)})`,
       planet.x / scale,
-      (planet.y + planet.size) / scale + 2,
+      (planet.y - planet.size) / scale - 5,
       c,
       {
-        size: planet.size / 40,
-        color: "#eee",
+        size: 8 + planet.size / 150,
+        color: "#fffb",
         align: "center",
+        baseline: "bottom",
       }
     );
-    text(`${planet.name}`, planet.x / scale, (planet.y - planet.size) / scale - 2, c, {
-      size: planet.size / 40,
-      color: "#eee",
-      baseline: "bottom",
-      align: "center",
-    });
+    // text(`${planet.name}`, planet.x / scale, (planet.y - planet.size) / scale - 5, c, {
+    //   size: 8 + planet.size / 150,
+    //   color: "#fffb",
+    //   baseline: "bottom",
+    //   align: "center",
+    // });
   }
 }
