@@ -11,11 +11,11 @@ export default class Player extends MoveabelEntity {
   oxygen = 200;
   hullIntegrity = 100;
 
-  acceleration = 0.024;
+  acceleration = 0.038;
   booster_acceleration = 0.025;
   oxygen_depletion = 0.005;
 
-  booster_max = 5.83;
+  booster_max = 4.23;
   oxygen_max = 200;
   hullIntegrity_max = 100;
   fuel_max = 140;
