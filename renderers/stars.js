@@ -1,25 +1,27 @@
 let stars = [];
 
-for (let i = 0; i < (innerHeight + innerWidth) / 1.5; i++) {
+const divisor = 0.95;
+for (let i = 0; i < (innerHeight + innerWidth) / divisor; i++) {
   let obj = { x: Math.random(), y: Math.random(), alpha: Math.random() };
   stars.push(obj);
 }
 addEventListener("resize", () => {
-  if (stars.length < (innerHeight + innerWidth) / 1.5) {
-    for (let i = 0; i < (innerHeight + innerWidth) / 1.5 - stars.length; i++) {
+  if (stars.length < (innerHeight + innerWidth) / divisor) {
+    for (let i = 0; i < (innerHeight + innerWidth) / divisor - stars.length; i++) {
       let obj = { x: Math.random(), y: Math.random(), alpha: Math.random() };
       stars.push(obj);
       i++;
     }
-  } else if (stars.length > (innerHeight + innerWidth) / 1.5) {
-    for (let i = 0; i < stars.length - (innerHeight + innerWidth) / 1.75; i++) {
+  } else if (stars.length > (innerHeight + innerWidth) / divisor) {
+    for (let i = 0; i < stars.length - (innerHeight + innerWidth) / divisor; i++) {
       stars.splice(0, 1);
       i++;
     }
   }
 });
 
-export function renderStars({ c, camera, renderUnits }) {
+export function renderStars({ c, player, camera, renderUnits }) {
+  console.time("this");
   let background = c.createLinearGradient(
     renderUnits.maxX / -2,
     renderUnits.maxY / -2,
@@ -61,11 +63,12 @@ export function renderStars({ c, camera, renderUnits }) {
 
   c.globalAlpha = 1;
 
-  c.fillStyle = "white";
   c.save();
+  c.translate(-camera.x / 200, -camera.y / 200);
+  c.fillStyle = "white";
   stars.forEach((star, num) => {
-    let xPos = (star.x * renderUnits.maxDimension - renderUnits.maxDimension / 2) * 2;
-    let yPos = (star.y * renderUnits.maxDimension - renderUnits.maxDimension / 2) * 2;
+    let xPos = (star.x * renderUnits.maxDimension * 2 - renderUnits.maxDimension) * 2;
+    let yPos = (star.y * renderUnits.maxDimension * 2 - renderUnits.maxDimension) * 2;
     let size;
     if (num % 100 === 0) {
       size = 1.5;
@@ -78,8 +81,9 @@ export function renderStars({ c, camera, renderUnits }) {
     }
     c.globalAlpha = star.alpha + 0.1;
     c.beginPath();
-    c.arc(xPos, yPos, size, 0, Math.PI * 2);
+    c.rect(xPos - size, yPos - size, size * 2, size * 2);
     c.fill();
   });
   c.restore();
+  console.timeEnd("this");
 }
