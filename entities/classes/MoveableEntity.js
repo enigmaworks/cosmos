@@ -40,8 +40,6 @@ export default class MoveableEntity extends StaticEntity {
           const distInsideSelf = this.size - Math.hypot(collisonX - this.x, collisonY - this.y);
           const distToMoveOut = distInsideEntity + distInsideSelf;
 
-          // const hulldamage = 40 * Math.log(Math.hypot(this.xVel, this.yVel) - 3.5);
-          // if (!(hulldamage < 0) && hulldamage) this.hullIntegrity -= hulldamage;
           this.x -= distToMoveOut * x_gravity_multiplier + gravity_stregnth * x_gravity_multiplier;
           this.y -= distToMoveOut * y_gravity_multiplier + gravity_stregnth * y_gravity_multiplier;
           this.velocity.x = 0;
