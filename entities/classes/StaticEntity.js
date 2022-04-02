@@ -20,4 +20,8 @@ export default class StaticEntity {
     }
     return collisions;
   }
+  setLocation(x, y) {
+    this.x = x;
+    this.y = y;
+  }
 }
