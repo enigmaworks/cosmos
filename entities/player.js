@@ -43,6 +43,8 @@ export default class Player extends MoveabelEntity {
       yForce = this.acceleration * Math.cos(this.rotation) * this.booster;
       this.fuel -= this.acceleration;
     }
+    this.engine_x = xForce;
+    this.engine_y = yForce;
     return { r: rotationForce, x: xForce, y: yForce };
   }
 
