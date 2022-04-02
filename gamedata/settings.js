@@ -1,8 +1,9 @@
 export default {
+  planetdataFileName: "planet-data.json",
   planetScaleFactor: 1.425,
   MassConstant: 1 / 2,
   RotationalGravityMultiplier: 1 / 20,
-  GravitationalConstant: 6.67408 * 10 ** -2.35,
+  GravitationalConstant: 0.0298,
   AtmosphereRendererSizeMultiplier: 4.1,
   TextDefualtOptions: {
     color: "#aaa",

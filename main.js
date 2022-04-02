@@ -10,12 +10,13 @@ const { canvas, c } = CanvasManager.create();
 import planets from "./entities/planets.js";
 import Player from "./entities/player.js";
 import StaticEntity from "./entities/classes/StaticEntity.js";
+import settings from "./gamedata/settings.js";
 
 let player;
 let camera;
 
 function fontsReady() {
-  fetch("/gamedata/planet-data.json")
+  fetch(`/gamedata/${settings.planetdataFileName}`)
     .then((response) => response.json())
     .then(function (data) {
       planets.createBodiesWithData(data);
