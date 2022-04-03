@@ -71,16 +71,34 @@ export function render({ c, fps, camera, planets, player }) {
     align: "right",
   });
 
+  let hullstatus = "undamaged";
+  let hulldamage = Math.round((player.hullIntegrity / player.hullIntegrity_max) * 100);
+  if (hulldamage < 50) {
+    hullstatus = "Compromised";
+  } else if (hulldamage < 61) {
+    hullstatus = "Severely Damaged";
+  } else if (hulldamage < 72) {
+    hullstatus = "Damaged";
+  } else if (hulldamage < 83) {
+    hullstatus = "In need of repair";
+  } else if (hulldamage < 96) {
+    hullstatus = "Good";
+  }
+
+  let sortedPlanets = player.calculateNearest(planets.bodies);
+
   let stats = [
-    `${Math.round((player.fuel / player.fuel_max) * 100)}% fuel`,
-    `Hull Integrity: ${Math.round((player.hullIntegrity / player.hullIntegrity_max) * 100)}%`,
+    `${Math.round(player.fuel)}/${Math.round(player.fuel_max)} fuel units`,
+    `Hull Integrity: ${hullstatus.toLocaleLowerCase()}`,
     `Oxygen: ${Math.round((player.oxygen / player.oxygen_max) * 100)}%`,
-    `Boost: ${Math.round(((player.booster - 1) / (player.booster_max - 1)) * 100)}%`,
+    `Nearest Planet: ${sortedPlanets[0].name} (${Math.round(
+      (sortedPlanets[0].calculatedDistance - sortedPlanets[0].size) / 100
+    )} units)`,
   ];
 
   stats.forEach((stat, i) => {
     text(stat, 25 + renderUnits.maxX / -2, (i + 1) * 25 + 50 + renderUnits.maxY / -2, c, {
-      color: "#ddd",
+      color: "#eeec",
     });
   });
 }
