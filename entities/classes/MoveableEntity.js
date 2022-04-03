@@ -59,6 +59,17 @@ export default class MoveableEntity extends StaticEntity {
       this.velocity.r += r;
     }
   }
+  calculateNearest(entites) {
+    let sorted = entites;
+    sorted.sort((a, b) => {
+      const a_dist = Math.hypot(a.x - this.x, a.y - this.y);
+      const b_dist = Math.hypot(b.x - this.x, b.y - this.y);
+      a.calculatedDistance = a_dist;
+      b.calculatedDistance = b_dist;
+      return b_dist - a_dist;
+    });
+    return sorted.reverse();
+  }
   calculateAttraction(entities = []) {
     let force = {
       x: 0,
