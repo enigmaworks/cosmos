@@ -1,6 +1,6 @@
 # The Cosmos
 
-## a space exploration & survival game
+a space exploration & survival game
 
 ### about
 
