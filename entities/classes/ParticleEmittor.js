@@ -16,7 +16,7 @@ export default class ParticleEmittor extends MoveabelEntity {
   setLifetime(lifetime) {
     this.lifetime = lifetime;
   }
-  render(camera, c) {
+  render(data, camera, c) {
     this.particles.forEach((particle) => {
       particle.move();
       particle.lifetime--;
@@ -24,11 +24,12 @@ export default class ParticleEmittor extends MoveabelEntity {
     this.particles.forEach((particle, i) => {
       const { x, y, rotation, size, lifetime } = particle;
       if (this.type === "world") {
-        this.renderer(c, x - camera.x, y - camera.y, rotation, size, lifetime);
+        this.renderer(data, c, x - camera.x, y - camera.y, rotation, size, lifetime);
       } else if (this.type == "rotational_world") {
         let x_speed = Math.sin(this.rotation + rotation);
         let y_speed = Math.cos(this.rotation + rotation);
         this.renderer(
+          data,
           c,
           (x - camera.x) * x_speed,
           (y - camera.y) * y_speed,
@@ -37,9 +38,9 @@ export default class ParticleEmittor extends MoveabelEntity {
           lifetime
         );
       } else if (this.type == "rotational") {
-        this.renderer(c, x, y, rotation, size, lifetime);
+        this.renderer(data, c, x, y, rotation, size, lifetime);
       } else {
-        this.renderer(c, x, y, rotation, size, lifetime);
+        this.renderer(data, c, x, y, rotation, size, lifetime);
       }
 
       if (lifetime < 0) {
@@ -47,9 +48,9 @@ export default class ParticleEmittor extends MoveabelEntity {
       }
     });
   }
-  emit(amount, vel = {}) {
+  emit(amount, vel = {}, size = 1) {
     for (let i = 0; i < amount; i++) {
-      let particle = new MoveabelEntity(this.x, this.y, this.rotation, 1, vel);
+      let particle = new MoveabelEntity(this.x, this.y, this.rotation, size, vel);
       particle.lifetime = this.lifetime;
       this.particles.push(particle);
     }

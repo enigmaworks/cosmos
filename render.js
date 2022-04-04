@@ -10,34 +10,54 @@ let fps;
 
 let particles = new ParticleEmittor(0, 0, 0);
 particles.setPositionType("world");
-particles.setRenderer((c, x, y, r, size, lifetime) => {
+particles.setRenderer((data, c, x, y, r, size, lifetime) => {
   c.beginPath();
-  c.fillStyle = `hsla(${50 - (lifetime / particles.lifetime) * 50}, 100% ,50%, ${
-    lifetime / particles.lifetime + 0.2
+  c.fillStyle = `hsla(${60 - (lifetime / particles.lifetime) * 60}, 100% ,50%, ${
+    lifetime / particles.lifetime + 0.3
   })`;
-  c.arc(x, y, 2, 0, Math.PI * 2);
+  c.arc(x, y, Math.abs(lifetime / particles.lifetime) * size + 1, 0, Math.PI * 2);
   c.fill();
 });
 
-function renderExaust(player, camera, c) {
+function renderExaust(player, camera, c, keys) {
   const speed = Math.hypot(player.engine_x, player.engine_y) * 10;
   const xoff = Math.cos(player.rotation - Math.PI / 2);
   const yoff = Math.sin(player.rotation - Math.PI / 2);
 
-  particles.setLifetime(30 - speed * 15);
-  particles.render(camera, c);
+  particles.setLifetime(17 - speed * 8.5);
+  particles.render({}, camera, c);
+
   for (let i = 0; i < speed * 3; i++) {
     particles.setLocation(player.x + Math.random() * 10 - 5, player.y + Math.random() * 10 - 5);
     particles.setLocation(
-      particles.x + xoff * (player.size / 2),
-      particles.y + yoff * (player.size / 2)
+      particles.x + xoff * (player.size / 1.5),
+      particles.y + yoff * (player.size / 1.5)
     );
     if (player.engine_x !== 0 && player.engine_y !== 0) {
-      particles.emit(1, {
-        x: player.velocity.x - 2 * speed * -xoff,
-        y: player.velocity.y - 2 * speed * -yoff,
-      });
+      particles.emit(
+        1,
+        {
+          x: player.velocity.x - 6 * speed * -xoff,
+          y: player.velocity.y - 6 * speed * -yoff,
+        },
+        Math.ceil(Math.random() * 2)
+      );
     }
+  }
+  if (keys.space) {
+    particles.setLocation(player.x + Math.random() * 10 - 5, player.y + Math.random() * 10 - 5);
+    particles.setLocation(
+      particles.x + xoff * (player.size / 1.5),
+      particles.y + yoff * (player.size / 1.5)
+    );
+    particles.emit(
+      1,
+      {
+        x: player.velocity.x - 6 * speed * -xoff,
+        y: player.velocity.y - 6 * speed * -yoff,
+      },
+      Math.ceil(Math.random() * 2)
+    );
   }
 }
 
@@ -47,9 +67,10 @@ export function render({ c, fps, camera, planets, player }) {
   const items = { c, camera, player, planets, renderUnits, player, keys };
   renderStars(items);
   minimap(items);
-  renderExaust(player, camera, c);
+  renderExaust(player, camera, c, keys);
   planets.renderBodies(items);
   player.render({ c, camera, keys });
+  let sortedPlanets = player.calculateNearest(planets.bodies);
 
   text(`press [ M ] to toggle starmap`, 15 + renderUnits.maxX / -2, -15 + renderUnits.maxY / 2, c, {
     color: "#bbb",
@@ -84,8 +105,6 @@ export function render({ c, fps, camera, planets, player }) {
   } else if (hulldamage < 96) {
     hullstatus = "Good";
   }
-
-  let sortedPlanets = player.calculateNearest(planets.bodies);
 
   let stats = [
     `${Math.round(player.fuel)}/${Math.round(player.fuel_max)} fuel units`,
