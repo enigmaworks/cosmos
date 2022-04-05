@@ -4,9 +4,9 @@ export function update(camera, player, keys, planets) {
   player.applyForces([gf, cf]);
   player.move();
   let collisons = player.checkCollisions(planets.bodies);
-  player.calculateHullDamage(collisons);
+  player.hull.calculateDamage(collisons);
   player.getCollisionForce(collisons, "static");
   camera.x = player.x;
   camera.y = player.y;
-  player.oxygen -= player.oxygen_depletion + 0.1 * ((100 - player.hullIntegrity) / 100);
+  // player.oxygen -= player.oxygen_depletion + 0.1 * ((100 - player.hullIntegrity) / 100);
 }

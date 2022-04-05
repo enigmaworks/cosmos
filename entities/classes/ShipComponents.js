@@ -1,7 +1,7 @@
 export class ShipComponent {
-  constructor(initial, capacity, uses = {}) {
-    this.current = initial;
-    this.max_level = capacity;
+  constructor(initial, max, uses = {}) {
+    this.currentState = initial;
+    this.max = max;
     this.uses = {
       fuel: 0,
       energy: 0,
