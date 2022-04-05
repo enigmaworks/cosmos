@@ -16,6 +16,10 @@ export class StorageItem {
     this.capacity = capacity;
     this.minimum_capacity = minimum;
   }
+  deplete(amount, type = "value") {
+    if (type === "percent") this.amount *= 100 / amount;
+    if (type === "value") this.amount -= amount;
+  }
 }
 export class Weapon {
   constructor(damage, range, cooldown, options = { clustersize: 1, cost: {}, amount: Infinity }) {
