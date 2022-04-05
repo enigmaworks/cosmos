@@ -93,7 +93,7 @@ export function render({ c, fps, camera, planets, player }) {
   });
 
   let hullstatus = "undamaged";
-  let hulldamage = Math.round((player.hullIntegrity / player.hullIntegrity_max) * 100);
+  let hulldamage = Math.round((player.hull.currentState / player.hull.max) * 100);
   if (hulldamage < 50) {
     hullstatus = "Compromised";
   } else if (hulldamage < 61) {
@@ -107,9 +107,9 @@ export function render({ c, fps, camera, planets, player }) {
   }
 
   let stats = [
-    `${Math.round(player.fuel)}/${Math.round(player.fuel_max)} fuel units`,
+    `${Math.round(player.fuel.amount)}/${Math.round(player.fuel.capacity)} fuel units`,
     `Hull Integrity: ${hullstatus.toLocaleLowerCase()}`,
-    `Oxygen: ${Math.round((player.oxygen / player.oxygen_max) * 100)}%`,
+    `Oxygen: ${Math.round((player.oxygen.amount / player.oxygen.capacity) * 100)}%`,
     `Nearest Planet: ${sortedPlanets[0].name} (${Math.round(
       (sortedPlanets[0].calculatedDistance - sortedPlanets[0].size) / 100
     )} units)`,
