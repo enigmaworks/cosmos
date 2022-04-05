@@ -1,8 +1,7 @@
 export class ShipComponent {
-  constructor(initial, capacity, { uses = {} }) {
+  constructor(initial, capacity, uses = {}) {
     this.current = initial;
     this.max_level = capacity;
-    this.rate = rate;
     this.uses = {
       fuel: 0,
       energy: 0,
@@ -13,19 +12,18 @@ export class ShipComponent {
 }
 export class StorageItem {
   constructor(amount, capacity, minimum = 0) {
-    this.amount = initial;
+    this.amount = amount;
     this.capacity = capacity;
     this.minimum_capacity = minimum;
   }
 }
 export class Weapon {
-  constructor(damage, range, cooldown, { clustersize = 1, cost = {}, amount = Infinity }) {
+  constructor(damage, range, cooldown, options = { clustersize: 1, cost: {}, amount: Infinity }) {
     this.damage = damage;
-    this.clustersize = clustersize;
+    this.clustersize = options.clustersize;
     this.range = range;
     this.cooldown = cooldown;
-    this.amount = Infinity;
-    this.amount = amount;
+    this.amount = options.amount;
     this.cost = {
       uranium: 0,
       hydrogen: 0,
@@ -33,7 +31,7 @@ export class Weapon {
       aluminum: 0,
       silver: 0,
       magnesium: 0,
-      ...cost,
+      ...options.cost,
     };
   }
 }
