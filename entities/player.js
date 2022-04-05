@@ -1,5 +1,5 @@
 import MoveabelEntity from "./classes/MoveableEntity.js";
-import { Weapon, ShipComponent, StorageItem } from "./classes/ShipComponents.js";
+import { Weapon, ShipComponent, StorageItem, LifesupportSystem } from "./classes/ShipComponents.js";
 export default class Player extends MoveabelEntity {
   constructor() {
     super(0, 0, 0, 10);
@@ -9,21 +9,17 @@ export default class Player extends MoveabelEntity {
 
   fuel = new StorageItem(800, 800);
   oxygen = new StorageItem(200, 200);
-  temperature = 0;
-  pressure = 0;
-  radiation = 0;
-
-  update(item, amount, type = "value") {
-    if (type === "percent") this[item] *= 100 / amount;
-    if (type === "value") this[item] -= amount;
-  }
 
   engine = {
     main: new ShipComponent(0, 0, { fuel: 0.04 }),
     booster: new ShipComponent(1, 4.25, { fuel: 0.025 }),
   };
 
-  lifesupport = {};
+  lifesupport = {
+    temperature: new LifesupportSystem(0.002, 0.5, { goal: 19, min: 13, max: 34 }, 0.5),
+    pressure: new LifesupportSystem(0.002, 0.5, { goal: 1, min: 0.45, max: 2.5 }, 0.25),
+    radiation: new LifesupportSystem(0.002, 0.5, { goal: 0, min: -Infinity, max: 20000 }),
+  };
 
   hull = {
     ...new ShipComponent(100, 100),

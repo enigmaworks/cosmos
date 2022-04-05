@@ -39,3 +39,13 @@ export class Weapon {
     };
   }
 }
+export class LifesupportSystem {
+  constructor(initial, { goal, min, max }, rate, energyUse) {
+    this.level = initial;
+    this.stable = goal;
+    this.min = min;
+    this.max = max;
+    this.rate = rate;
+    this.energyUse = energyUse;
+  }
+}
