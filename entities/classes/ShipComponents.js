@@ -10,15 +10,15 @@ export class ShipComponent {
     };
   }
 }
-export class StorageItem {
-  constructor(amount, capacity, minimum = 0) {
-    this.amount = amount;
+export class Resource {
+  constructor(level, capacity, minimum = 0) {
+    this.level = level;
     this.capacity = capacity;
     this.minimum_capacity = minimum;
   }
-  deplete(amount, type = "value") {
-    if (type === "percent") this.amount *= 100 / amount;
-    if (type === "value") this.amount -= amount;
+  deplete(level, type = "value") {
+    if (type === "percent") this.level *= 100 / level;
+    if (type === "value") this.level -= level;
   }
 }
 export class Weapon {
