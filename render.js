@@ -107,14 +107,14 @@ export function render({ c, fps, camera, planets, player }) {
   }
 
   let stats = [
-    `${Math.round(player.fuel.amount)}/${Math.round(player.fuel.capacity)} fuel units`,
+    `${Math.round(player.fuel.level)}/${Math.round(player.fuel.capacity)} fuel units`,
     `Hull Integrity: ${hullstatus.toLocaleLowerCase()}`,
-    `Oxygen: ${Math.round((player.oxygen.amount / player.oxygen.capacity) * 100)}%`,
+    `Oxygen: ${Math.round((player.oxygen.level / player.oxygen.capacity) * 100)}%`,
     `Nearest Planet: ${sortedPlanets[0].name} (${Math.round(
       (sortedPlanets[0].calculatedDistance - sortedPlanets[0].size) / 100
     )} units)`,
     `Stored Energy: ${Math.round(player.reactor.storedEnergy)}`,
-    `Uranium: ${Math.round(player.uranium.amount)} / ${player.uranium.capacity}`,
+    `Uranium: ${Math.round(player.uranium.level)} / ${player.uranium.capacity}`,
     `Temperature: ${Math.round(player.temp)}`,
     `Radiation: ${Math.round(player.radiation)}`,
     `Pressure: ${Math.round(player.pressure)}`,
