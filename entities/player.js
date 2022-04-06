@@ -40,7 +40,7 @@ export default class Player extends MoveabelEntity {
 
   lifesupport = {
     systems: [
-      new LifesupportSystem(this, "temp", 35, 19, 13, 34, 0.02, 0.215),
+      new LifesupportSystem(this, "temp", 14, 18, 9, 38, 0.02, 0.215),
       new LifesupportSystem(this, "pressure", 0.5, 1, 0.45, 2.5, 0.005, 0.025),
       new LifesupportSystem(this, "radiation", 300, 0, -Infinity, 20000, 0.25, 0.125),
     ],
