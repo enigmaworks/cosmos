@@ -113,6 +113,8 @@ export function render({ c, fps, camera, planets, player }) {
     `Nearest Planet: ${sortedPlanets[0].name} (${Math.round(
       (sortedPlanets[0].calculatedDistance - sortedPlanets[0].size) / 100
     )} units)`,
+    `Stored Energy: ${Math.round(player.reactor.storedEnergy)}`,
+    `Uranium: ${Math.round(player.uranium.amount)} / ${player.uranium.capacity}`,
   ];
 
   stats.forEach((stat, i) => {

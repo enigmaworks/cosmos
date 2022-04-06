@@ -9,10 +9,31 @@ export default class Player extends MoveabelEntity {
 
   fuel = new StorageItem(800, 800);
   oxygen = new StorageItem(200, 200);
+  uranium = new StorageItem(50, 50);
 
   engine = {
     main: new ShipComponent(0, 0, { fuel: 0.04 }),
     booster: new ShipComponent(1, 4.25, { fuel: 0.025 }),
+  };
+
+  reactor = {
+    storedEnergy: 0,
+    max_energy_storage: 20,
+    max_output: 0.35,
+    rate: 0.015,
+    cost: 0.0005,
+    generateEnergy: () => {
+      let output = 0;
+      while (
+        this.reactor.storedEnergy < this.reactor.max_energy_storage &&
+        this.reactor.rate * output < this.reactor.max_output &&
+        this.uranium.amount - this.reactor.cost >= 0
+      ) {
+        this.reactor.storedEnergy += this.reactor.rate;
+        output++;
+        this.uranium.amount -= this.reactor.cost;
+      }
+    },
   };
 
   lifesupport = {
