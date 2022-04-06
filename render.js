@@ -107,6 +107,7 @@ export function render({ c, fps, camera, planets, player }) {
   }
 
   let stats = [
+    `speed: ${Math.hypot(player.engine_x, player.engine_y)}`,
     `${Math.round(player.fuel.level)}/${Math.round(player.fuel.capacity)} fuel units`,
     `Hull Integrity: ${hullstatus.toLocaleLowerCase()}`,
     `Oxygen: ${Math.round((player.oxygen.level / player.oxygen.capacity) * 100)}%`,

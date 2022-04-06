@@ -1,11 +1,21 @@
+class EmptyCost {
+  constructor() {
+    this.fuel = 0;
+    this.energy = 0;
+    this.uranium = 0;
+    this.hydrogen = 0;
+    this.oxygen = 0;
+    this.aluminum = 0;
+    this.silver = 0;
+    this.magnesium = 0;
+  }
+}
 export class ShipComponent {
   constructor(initial, max, uses = {}) {
     this.currentState = initial;
     this.max = max;
     this.uses = {
-      fuel: 0,
-      energy: 0,
-      oxygen: 0,
+      ...new EmptyCost(),
       ...uses,
     };
   }
@@ -29,12 +39,7 @@ export class Weapon {
     this.cooldown = cooldown;
     this.amount = options.amount;
     this.cost = {
-      uranium: 0,
-      hydrogen: 0,
-      oxygen: 0,
-      aluminum: 0,
-      silver: 0,
-      magnesium: 0,
+      ...new EmptyCost(),
       ...options.cost,
     };
   }

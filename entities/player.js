@@ -12,7 +12,9 @@ export default class Player extends MoveabelEntity {
   uranium = new Resource(50, 50);
 
   engine = {
-    main: new ShipComponent(0, 0, { fuel: 0.04 }),
+    acceleration: 0.0012,
+    booster_acceleration: 0.023,
+    main: new ShipComponent(0, 0.023, { fuel: 0.04 }),
     booster: new ShipComponent(1, 4.25, { fuel: 0.025 }),
   };
 
@@ -72,10 +74,10 @@ export default class Player extends MoveabelEntity {
 
   hull = {
     ...new ShipComponent(100, 100),
-    calculateDamage(collisons) {
+    calculateDamage: (collisons) => {
       for (let i = 0; i < collisons.length; i++) {
         const hulldamage = 40 * Math.log(Math.hypot(this.velocity.x, this.velocity.y) - 3.5);
-        if (!(hulldamage < 0) && hulldamage) this.hull.integrity -= hulldamage;
+        if (!(hulldamage < 0) && hulldamage) this.hull.currentState -= hulldamage;
       }
     },
   };
@@ -95,32 +97,48 @@ export default class Player extends MoveabelEntity {
     missiles: new Weapon(3, 80, 30, { amount: 10 }),
   };
 
-  calculateControlForce(keys) {
-    let rotationForce = 0;
-    if (keys.left) {
-      rotationForce = -0.002;
-    }
-    if (keys.right) {
-      rotationForce = 0.002;
-    }
-    if (keys.space && this.fuel > 0) {
-      if (this.booster < this.booster_max) {
-        this.booster += this.booster_acceleration;
+  applyCost = (costObj) => {
+    for (const resource in costObj) {
+      let applyCostTo = 0;
+      if (this[resource]) {
+        if (this[resource]?.level) applyCostTo = this[resource].level;
+        else applyCostTo = this[resource];
       }
-      this.fuel -= this.booster_max / 200;
+      applyCostTo -= costObj[resource];
+    }
+  };
+
+  calculateControlForce(keys) {
+    const engine = this.engine;
+    const booster = engine.booster;
+    const main = engine.main;
+
+    let force = { r: 0, x: 0, y: 0 };
+
+    if (keys.left) force.r = -0.002;
+    if (keys.right) force.r = 0.002;
+
+    if (keys.space && this.fuel.level > 0) {
+      if (booster.currentState < booster.max) {
+        booster.currentState += engine.booster_acceleration;
+      }
+      this.applyCost(booster.uses);
     } else {
-      this.booster = 1;
+      booster.currentState = 1;
     }
-    let xForce = 0;
-    let yForce = 0;
-    if (keys.up && this.fuel > 0) {
-      xForce = -(this.acceleration * Math.sin(this.rotation)) * this.booster;
-      yForce = this.acceleration * Math.cos(this.rotation) * this.booster;
-      this.fuel -= this.acceleration;
+
+    if (keys.up && this.fuel.level > 0) {
+      if (main.currentState < main.max) {
+        main.currentState += engine.acceleration;
+      }
+      this.applyCost(main.uses);
+      force.x = -(main.currentState * Math.sin(this.rotation)) * booster.currentState;
+      force.y = main.currentState * Math.cos(this.rotation) * booster.currentState;
+      this.fuel.level -= engine.acceleration;
     }
-    this.engine_x = xForce;
-    this.engine_y = yForce;
-    return { r: rotationForce, x: xForce, y: yForce };
+    this.engine_x = force.x;
+    this.engine_y = force.y;
+    return force;
   }
 
   render({ c, camera, keys }) {
