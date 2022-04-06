@@ -7,7 +7,7 @@ export function update(camera, player, keys, planets) {
   player.hull.calculateDamage(collisons);
   player.getCollisionForce(collisons, "static");
   player.reactor.generateEnergy();
+  player.lifesupport.run();
   camera.x = player.x;
   camera.y = player.y;
-  // player.oxygen -= player.oxygen_depletion + 0.1 * ((100 - player.hullIntegrity) / 100);
 }

@@ -115,6 +115,9 @@ export function render({ c, fps, camera, planets, player }) {
     )} units)`,
     `Stored Energy: ${Math.round(player.reactor.storedEnergy)}`,
     `Uranium: ${Math.round(player.uranium.amount)} / ${player.uranium.capacity}`,
+    `Temperature: ${Math.round(player.temp)}`,
+    `Radiation: ${Math.round(player.radiation)}`,
+    `Pressure: ${Math.round(player.pressure)}`,
   ];
 
   stats.forEach((stat, i) => {

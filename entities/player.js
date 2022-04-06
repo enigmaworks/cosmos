@@ -37,9 +37,37 @@ export default class Player extends MoveabelEntity {
   };
 
   lifesupport = {
-    temperature: new LifesupportSystem(0.002, 0.5, { goal: 19, min: 13, max: 34 }, 0.5),
-    pressure: new LifesupportSystem(0.002, 0.5, { goal: 1, min: 0.45, max: 2.5 }, 0.25),
-    radiation: new LifesupportSystem(0.002, 0.5, { goal: 0, min: -Infinity, max: 20000 }),
+    systems: [
+      new LifesupportSystem(this, "temp", 35, 19, 13, 34, 0.02, 0.215),
+      new LifesupportSystem(this, "pressure", 0.5, 1, 0.45, 2.5, 0.005, 0.025),
+      new LifesupportSystem(this, "radiation", 300, 0, -Infinity, 20000, 0.25, 0.125),
+    ],
+    run: () => {
+      const reactor = this.reactor;
+      const systems = this.lifesupport.systems;
+      let totalCost = 0;
+
+      systems.forEach((sys) => {
+        if (sys.level - sys.rate >= sys.stable || sys.level + sys.rate <= sys.stable) {
+          totalCost += sys.energycost;
+        }
+      });
+
+      let multiplier = 1;
+      if (reactor.storedEnergy - totalCost <= 0) multiplier = reactor.storedEnergy / systems.length;
+
+      systems.forEach((sys) => {
+        sys.level = sys.parent[sys.prop] || sys.level;
+        if (sys.level - sys.rate * multiplier >= sys.stable) {
+          sys.level -= sys.rate * multiplier;
+          reactor.storedEnergy -= sys.energycost * multiplier;
+        } else if (sys.level + sys.rate * multiplier <= sys.stable) {
+          sys.level += sys.rate * multiplier;
+          reactor.storedEnergy -= sys.energycost * multiplier;
+        }
+        sys.parent[sys.prop] = sys.level;
+      });
+    },
   };
 
   hull = {

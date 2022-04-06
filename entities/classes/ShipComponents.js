@@ -40,12 +40,22 @@ export class Weapon {
   }
 }
 export class LifesupportSystem {
-  constructor(initial, { goal, min, max }, rate, energyUse) {
+  // inital = numerical, the starting value for this system
+  // goal = the ideal value for this system to reach
+  // min & max =  the lowest or highest value the system can reach before game over
+  // rate =  when on full power, the fastest rate the system can change
+  // energy use = the amount of energy used per change of amount rate
+  //parent = the object to apply the property to.
+  //propName =  the name to access the total system from (systemObject.propName)
+
+  constructor(parent, propName, initial, goal, min, max, rate, energyUse) {
+    this.parent = parent;
+    this.prop = propName;
     this.level = initial;
     this.stable = goal;
     this.min = min;
     this.max = max;
     this.rate = rate;
-    this.energyUse = energyUse;
+    this.energycost = energyUse;
   }
 }
