@@ -13,25 +13,39 @@ export default function (c, planets, mapsize) {
   for (let i = 0; i < planets.length; i++) {
     const planet = planets[i];
     c.beginPath();
-    let fill = "#888";
-    if (planet.fill.type === "color") {
-      fill = planet.fill.f;
-    }
-    if (planet.fill.type === "img") {
-      fill = c.createPattern(planet.fill.f, "repeat");
-    }
-    if (planet.fill.type === "gradient") {
+    let total = 0.00001;
+    if (planet.fill) {
+      let fill;
+      fill = c.createLinearGradient(
+        planet.x + planet.size / 2,
+        planet.y + planet.size / 2,
+        planet.x - planet.size / 2,
+        planet.y - planet.size / 2
+      );
+      fill.addColorStop(0, planet.fill1);
+      fill.addColorStop(1, planet.fill2);
+      c.fillStyle = fill;
+    } else {
+      const mantle = planet.mantle.content;
+      for (const element in mantle) {
+        total += mantle[element];
+      }
+      let h = ((mantle.uranium + mantle.magnesium + mantle.silver) / total) * 256;
+      h = Math.abs(Math.sin(256 / h)) * 256 || 0;
+      let s = ((mantle.hydrogen + mantle.oxygen) / total) * 65 + 35;
+      let l = (mantle.iron / total) * 50 + 50;
+      let fill;
       fill = c.createLinearGradient(
         (planet.x + planet.size / 2) / scale,
         (planet.y + planet.size / 2) / scale,
         (planet.x - planet.size / 2) / scale,
         (planet.y - planet.size / 2) / scale
       );
-      planet.fill.f.forEach((stop) => {
-        fill.addColorStop(stop.s, stop.c);
-      });
+      fill.addColorStop(0, `hsl(${h},${s}%,${l}%)`);
+      fill.addColorStop(1, `hsl(${h - 35},${s}%,${l}%)`);
+      c.fillStyle = fill;
     }
-    c.fillStyle = fill;
+
     c.arc(planet.x / scale, planet.y / scale, planet.size / scale, 0, Math.PI * 2);
     c.fill();
     text(

@@ -19,7 +19,7 @@ function fontsReady() {
   fetch(`/gamedata/${settings.planetdataFileName}`)
     .then((response) => response.json())
     .then(function (data) {
-      planets.createBodiesWithData(data);
+      planets.createBodiesWithData(data, c);
       player = new Player();
       camera = new StaticEntity(0, 0, 0, 0);
 

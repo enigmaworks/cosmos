@@ -9,8 +9,9 @@ class Planet extends StaticEntity {
     this.fill = { type: "color", f: "#888" };
     this.atmosphere = {};
   }
-  setFill(fill) {
-    this.fill = fill;
+  setFill(fill1, fill2) {
+    this.fill1 = fill1;
+    this.fill2 = fill2;
   }
   setAtmosphere(atmosphere) {
     this.atmosphere = atmosphere;
@@ -20,7 +21,7 @@ class Planet extends StaticEntity {
 export default {
   bodies: [],
 
-  createBodiesWithData: function (data) {
+  createBodiesWithData: function (data, c) {
     data.forEach((element) => {
       let planet = new Planet(
         element.name,
@@ -28,9 +29,23 @@ export default {
         element.y,
         element.size * settings.planetScaleFactor
       );
+
+      planet.mantle = element.mantle;
+      planet.core = element.core;
+      planet.amtosphere = element.amtosphere;
+
+      const mantle = element.mantle.content;
+      let total = 0;
+      for (const element in mantle) {
+        total += mantle[element];
+      }
+      let h = ((mantle.uranium + mantle.magnesium + mantle.silver) / total) * 256;
+      h = Math.abs(Math.sin(256 / h)) * 256 || 0;
+      let s = ((mantle.hydrogen + mantle.oxygen) / total) * 65 + 35;
+      let l = (mantle.iron / total) * 50 + 50;
+
+      planet.setFill(`hsl(${h},${s}%,${l}%)`, `hsl(${h - 55},${s}%,${l}%)`);
       planet.setDenisty(element.density);
-      planet.setFill(element.fill);
-      planet.setAtmosphere(element.atmosphere);
       this.bodies.push(planet);
     });
   },
@@ -47,7 +62,7 @@ export default {
         planet.y - camera.y - atmoshphere_size < renderUnits.maxY / 2
       ) {
         const atmosphere = c.createRadialGradient(0, 0, planet.size, 0, 0, atmoshphere_size);
-        atmosphere.addColorStop(0, planet.atmosphere);
+        atmosphere.addColorStop(0, planet.fill1);
         atmosphere.addColorStop(0.5, "hsla(240, 57%, 9%, 0)");
 
         const background_fade = c.createRadialGradient(0, 0, planet.size, 0, 0, atmoshphere_size);
@@ -83,24 +98,15 @@ export default {
         c.save();
         c.translate(planet.x - camera.x, planet.y - camera.y);
         c.beginPath();
-        let fill = "#888";
-        if (planet.fill.type === "color") {
-          fill = planet.fill.f;
-        }
-        if (planet.fill.type === "img") {
-          fill = c.createPattern(planet.fill.f, "repeat");
-        }
-        if (planet.fill.type === "gradient") {
-          fill = c.createLinearGradient(
-            planet.size / 2,
-            planet.size / 2,
-            -planet.size / 2,
-            -planet.size / 2
-          );
-          planet.fill.f.forEach((stop) => {
-            fill.addColorStop(stop.s, stop.c);
-          });
-        }
+        let fill;
+        fill = c.createLinearGradient(
+          planet.x + planet.size / 2,
+          planet.y + planet.size / 2,
+          planet.x - planet.size / 2,
+          planet.y - planet.size / 2
+        );
+        fill.addColorStop(0, planet.fill1);
+        fill.addColorStop(1, planet.fill2);
         c.fillStyle = fill;
         c.arc(0, 0, planet.size, 0, Math.PI * 2);
         c.fill();
