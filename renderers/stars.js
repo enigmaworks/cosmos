@@ -1,6 +1,6 @@
 let stars = [];
 
-const divisor = 0.95;
+const divisor = 0.65;
 for (let i = 0; i < (innerHeight + innerWidth) / divisor; i++) {
   let obj = { x: Math.random(), y: Math.random(), alpha: Math.random() };
   stars.push(obj);

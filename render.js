@@ -95,27 +95,28 @@ export function render({ c, fps, camera, planets, player }) {
   let hullstatus = "undamaged";
   let hulldamage = Math.round((player.hull.currentState / player.hull.max) * 100);
   if (hulldamage < 50) {
-    hullstatus = "Compromised";
+    hullstatus = "broken. you crashed it...";
   } else if (hulldamage < 61) {
-    hullstatus = "Severely Damaged";
+    hullstatus = "severely damaged";
   } else if (hulldamage < 72) {
-    hullstatus = "Damaged";
+    hullstatus = "damaged";
   } else if (hulldamage < 83) {
-    hullstatus = "In need of repair";
+    hullstatus = "in need of repair";
   } else if (hulldamage < 96) {
-    hullstatus = "Good";
+    hullstatus = "in good condition";
   }
 
   let stats = [
-    `speed: ${Math.hypot(player.engine_x, player.engine_y)}`,
+    `engine output: ${Math.round(Math.hypot(player.engine_x, player.engine_y) * 1000) / 10}`,
     `${Math.round(player.fuel.level)}/${Math.round(player.fuel.capacity)} fuel units`,
-    `Hull Integrity: ${hullstatus.toLocaleLowerCase()}`,
+    `ship is ${hullstatus.toLocaleLowerCase()}`,
     `Oxygen: ${Math.round((player.oxygen.level / player.oxygen.capacity) * 100)}%`,
     `Nearest Planet: ${sortedPlanets[0].name} (${Math.round(
       (sortedPlanets[0].calculatedDistance - sortedPlanets[0].size) / 100
     )} units)`,
-    `Stored Energy: ${Math.round(player.reactor.storedEnergy)}`,
+    `Battery Level: ${Math.round(player.reactor.storedEnergy)}`,
     `Uranium: ${Math.round(player.uranium.level)} / ${player.uranium.capacity}`,
+    `Maximum Reactor Output: ${player.reactor.max_output}`,
     `Temperature: ${Math.round(player.temp)}`,
     `Radiation: ${Math.round(player.radiation)}`,
     `Pressure: ${Math.round(player.pressure)}`,
