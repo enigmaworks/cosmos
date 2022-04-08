@@ -19,12 +19,26 @@ function update() {
   c.clearRect(-xmax / 2, -xmax / 2, xmax, xmax);
   try {
     starmap(c, planets, xmax);
-  } catch {}
+  } catch (e) {
+    console.log(e);
+  }
   requestAnimationFrame(update);
+}
+
+class RandomContent {
+  constructor() {
+    this.uranium = Math.floor(Math.random() * 10);
+    this.hydrogen = Math.floor(Math.random() * 10);
+    this.oxygen = Math.floor(Math.random() * 10);
+    this.iron = Math.floor(Math.random() * 10);
+    this.silver = Math.floor(Math.random() * 10);
+    this.magnesium = Math.floor(Math.random() * 10);
+  }
 }
 
 const fileElem = document.querySelector("#file");
 fileElem.addEventListener("change", handleFiles, false);
+
 function handleFiles() {
   const fileList = this.files;
   let reader = new FileReader();
@@ -42,7 +56,23 @@ document.querySelector("#local").addEventListener("click", () => {
 });
 document.querySelector("#local-load").addEventListener("click", () => {
   let p = localStorage.getItem("map") || [];
-  planets = JSON.parse(p);
+  p = JSON.parse(p);
+  for (let planet in p) {
+    delete p[planet].fill;
+    p[planet].atmosphere = {
+      density: 1,
+      content: new RandomContent(),
+    };
+    p[planet].mantle = {
+      density: 1,
+      content: new RandomContent(),
+    };
+    p[planet].core = {
+      density: 1,
+      content: new RandomContent(),
+    };
+  }
+  planets = p;
   generateHTML(planets);
 });
 
@@ -51,18 +81,22 @@ update();
 function addPlanet() {
   planets.push({
     name: "New Planet",
+    size: Math.random() * 300 + 150,
+    x: Math.random() * 30000 - 15000,
+    y: Math.random() * 30000 - 15000,
     density: 1,
-    size: 400,
-    x: 0,
-    y: 0,
-    fill: {
-      type: "gradient",
-      f: [
-        { s: 0, c: "red" },
-        { s: 1, c: "yellow" },
-      ],
+    atmosphere: {
+      density: 1,
+      content: new RandomContent(),
     },
-    atmosphere: "#888",
+    mantle: {
+      density: 1,
+      content: new RandomContent(),
+    },
+    core: {
+      density: 1,
+      content: new RandomContent(),
+    },
   });
   generateHTML(planets);
 }
@@ -78,124 +112,121 @@ function generateHTML(planets) {
   document.querySelector(".container").innerHTML = "";
   const fragment = document.createDocumentFragment();
   planets.forEach((planet) => {
-    let { name, size, x, y, density, atmosphere, fill } = planet;
+    let { name, size, x, y, density, atmosphere, mantle, core } = planet;
 
-    const nameElem = document.createElement("input");
-    nameElem.type = "text";
-    nameElem.value = name;
+    const nameElem = createInput("text", "name", name, (val) => (planet.name = val));
     nameElem.classList.add("name");
-    nameElem.addEventListener("change", ({ target }) => {
-      planet.name = target.value;
-    });
-    const sizeElem = document.createElement("input");
-    sizeElem.type = "number";
-    sizeElem.value = size;
-    sizeElem.addEventListener("change", ({ target }) => {
-      planet.size = parseInt(target.value) || 1;
-    });
-    const xElem = document.createElement("input");
-    xElem.type = "number";
-    xElem.value = x / 100;
-    xElem.addEventListener("change", ({ target }) => {
-      planet.x = parseInt(target.value) * 100 || 0;
-    });
-    const yElem = document.createElement("input");
-    yElem.type = "number";
-    yElem.value = y / -100;
-    yElem.addEventListener("change", ({ target }) => {
-      planet.y = parseInt(target.value) * -100 || 0;
-    });
-    const densityElem = document.createElement("input");
-    densityElem.type = "number";
-    densityElem.value = density;
-    densityElem.step = 0.01;
-    densityElem.addEventListener("change", ({ target }) => {
-      planet.density = parseFloat(target.value);
-    });
-    const atmosphereElem = document.createElement("input");
-    atmosphereElem.type = "text";
-    atmosphereElem.value = atmosphere;
-    atmosphereElem.addEventListener("change", ({ target }) => {
-      planet.atmosphere = target.value;
-    });
-
+    const sizeElem = createInput(
+      "number",
+      "size",
+      size,
+      (val) => (planet.size = parseInt(val) || 1)
+    );
+    const xElem = createInput(
+      "number",
+      "x",
+      x / 100,
+      (val) => (planet.x = parseInt(val) * 100 || 0)
+    );
+    const yElem = createInput(
+      "number",
+      "y",
+      y / -100,
+      (val) => (planet.y = parseInt(val) * -100 || 0)
+    );
+    const densityElem = createInput(
+      "number",
+      "density",
+      density,
+      (val) => (planet.density = parseFloat(val)),
+      { step: 0.01 }
+    );
     const div = document.createElement("div");
 
-    const filldiv = document.createElement("div");
-    filldiv.classList.add("fill");
-    const fillElem = document.createElement("input");
-    fillElem.type = "text";
-    fillElem.value = fill.type;
-    fillElem.addEventListener("change", ({ target }) => {
-      planet.fill.type = target.value;
-      if (target.value === "color") {
-        fill.f = "orange";
-      } else if (target.value === "gradient") {
-        fill.f = [
-          { s: 0, c: "red" },
-          { s: 1, c: "yellow" },
-        ];
-      }
-      generateHTML(planets);
-    });
+    const atmosphereContainer = document.createElement("details");
+    const atmosphereSummary = document.createElement("summary");
+    atmosphereSummary.innerText = "atmosphere";
+    atmosphereContainer.appendChild(atmosphereSummary);
+    atmosphereContainer.classList.add("atmosphere");
 
-    if (fill.type === "color") {
-      const fElem = document.createElement("input");
-      fElem.type = "text";
-      fElem.value = fill.f;
-      fElem.addEventListener("change", ({ target }) => {
-        planet.fill.f = target.value;
-      });
-      console.log(fElem);
-      filldiv.appendChild(fElem);
-    } else {
-      let button = document.createElement("button");
-      button.innerText = "Add Stop";
-      button.addEventListener("click", () => {
-        planet.fill.f.push({ s: 1, c: "red" });
-        generateHTML(planets);
-      });
-      filldiv.appendChild(button);
-      let xb = document.createElement("button");
-      xb.innerText = "Remove Stop";
-      xb.addEventListener("click", () => {
-        planet.fill.f.splice(parseInt(window.prompt("Which stop?")) - 1, 1);
-        generateHTML(planets);
-      });
-      filldiv.appendChild(xb);
-      fill.f.forEach(({ s, c }, i) => {
-        const elem = document.createElement("span");
-        elem.classList.add("gradient-stop");
-        const sElem = document.createElement("input");
-        sElem.type = "number";
-        sElem.value = s;
-        sElem.step = 0.01;
+    for (const elem in atmosphere.content) {
+      const sElem = createInput(
+        "number",
+        elem,
+        atmosphere.content[elem],
+        (val) => (atmosphere.content[elem] = parseInt(val))
+      );
+      atmosphereContainer.appendChild(sElem);
+    }
 
-        sElem.addEventListener("change", ({ target }) => {
-          planet.fill.f[i].s = parseFloat(target.value);
-        });
-        const cElem = document.createElement("input");
-        cElem.type = "text";
-        cElem.value = c;
-        cElem.addEventListener("change", ({ target }) => {
-          planet.fill.f[i].c = target.value;
-        });
-        elem.appendChild(sElem);
-        elem.appendChild(cElem);
-        filldiv.appendChild(elem);
-      });
+    const mantleContainer = document.createElement("details");
+    const mantleSummary = document.createElement("summary");
+    mantleSummary.innerText = "mantle";
+    mantleContainer.appendChild(mantleSummary);
+    mantleContainer.classList.add("mantle");
+
+    for (const elem in mantle.content) {
+      const sElem = createInput(
+        "number",
+        elem,
+        mantle.content[elem],
+        (val) => (mantle.content[elem] = parseInt(val))
+      );
+      mantleContainer.appendChild(sElem);
+    }
+
+    const coreContainer = document.createElement("details");
+    const coreSummary = document.createElement("summary");
+    coreSummary.innerText = "core";
+    coreContainer.appendChild(coreSummary);
+    coreContainer.classList.add("core");
+
+    for (const elem in core.content) {
+      const sElem = createInput(
+        "number",
+        elem,
+        core.content[elem],
+        (val) => (core.content[elem] = parseInt(val))
+      );
+      coreContainer.appendChild(sElem);
     }
     div.appendChild(nameElem);
     div.appendChild(sizeElem);
     div.appendChild(xElem);
     div.appendChild(yElem);
     div.appendChild(densityElem);
-    div.appendChild(atmosphereElem);
-    div.appendChild(filldiv);
-    div.appendChild(fillElem);
+    div.appendChild(atmosphereContainer);
+    div.appendChild(mantleContainer);
+    div.appendChild(coreContainer);
     fragment.appendChild(div);
   });
   document.querySelector(".container").appendChild(fragment);
+}
+
+function createInput(type, label, defualt, listener, options = {}) {
+  const id = Math.floor(Math.random() * 10000000);
+  const { step, listenerType } = {
+    step: null,
+    listenerType: "change",
+    ...options,
+  };
+  const input = document.createElement("input");
+  input.id = id;
+  input.type = type;
+  input.value = defualt;
+  const labelElem = document.createElement("label");
+  labelElem.htmlFor = id;
+  labelElem.innerText = `${label}`;
+  if (step) {
+    input.step = step;
+  }
+  input.addEventListener(listenerType, (event) => {
+    listener(event.target.value);
+  });
+  let group = document.createElement("span");
+  group.appendChild(labelElem);
+  group.appendChild(input);
+  return group;
 }
 
 function download() {
