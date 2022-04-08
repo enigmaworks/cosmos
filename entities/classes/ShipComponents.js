@@ -1,11 +1,11 @@
-class EmptyCost {
+export class EmptyCost {
   constructor() {
     this.fuel = 0;
     this.energy = 0;
     this.uranium = 0;
     this.hydrogen = 0;
     this.oxygen = 0;
-    this.aluminum = 0;
+    this.iron = 0;
     this.silver = 0;
     this.magnesium = 0;
   }
